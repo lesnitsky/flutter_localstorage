@@ -1,8 +1,8 @@
 name: localstorage
 description: A new flutter package project.
 version: 1.0.0
-author:
-homepage:
+author: Andrei Lesnitsky <andrei.lesnitsky@gmail.com>
+homepage: https://github.com/lesnitsky/flutter_localstorage
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
@@ -15,5 +15,3 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-flutter:

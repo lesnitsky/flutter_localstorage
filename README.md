@@ -4,36 +4,19 @@ Simple json file-based storage for flutter
 
 ## Installation
 
-`pubspec.yaml`
+Add dependency to `pubspec.yaml`
 
 ```yaml
 dependencies:
   ...
-  localstorage:
-    git: https://github.com/lesnitsky/flutter_localstorage.git
+  localstorage: ^1.0.0
 ```
+
+Run in your terminal
 
 ```sh
 flutter packages get
 ```
-
-## API
-
-### `new LocalStorage(String: key)`
-
-Creates instance of a local storage. Key is used as a filename
-
-### `Future<void> setItem(String key, dynamic value)`
-
-Saves item by key to a storage. Value should be json encodable (`json.encode()` is called under the hood).
-
-### `getItem(String key)`
-
-Returns a value from storage by key
-
-### `Future<void> deleteItem(String key)`
-
-Removes item from storage by key
 
 ## Example
 

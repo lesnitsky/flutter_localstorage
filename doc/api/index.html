@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="made with love by dartdoc 0.20.4">
+  <meta name="description" content="localstorage API docs, for the Dart programming language.">
+  <title>localstorage - Dart API docs</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500,400i,400,300|Source+Sans+Pro:400,300,700" rel="stylesheet">
+  <link rel="stylesheet" href="static-assets/github.css">
+  <link rel="stylesheet" href="static-assets/styles.css">
+  <link rel="icon" href="static-assets/favicon.png">
+
+</head>
+
+<body>
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">localstorage package</li>
+  </ol>
+  <div class="self-name">localstorage</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+  <div class="col-xs-6 col-sm-3 col-md-2 sidebar sidebar-offcanvas-left">
+    <h5><span class="package-name">localstorage</span> <span class="package-kind">package</span></h5>
+    <ol>
+          <li class="section-title">Libraries</li>
+          <li><a href="localstorage/localstorage-library.html">localstorage</a></li>
+    </ol>
+  </div>
+
+  <div class="col-xs-12 col-sm-9 col-md-8 main-content">
+      <section class="desc markdown">
+        <h1 id="localstorage">Localstorage</h1>
+<p>Simple json file-based storage for flutter</p>
+<h2 id="installation">Installation</h2>
+<p><code>pubspec.yaml</code></p>
+<pre class="language-yaml"><code class="language-yaml">dependencies:
+  ...
+  localstorage:
+    git: https://github.com/lesnitsky/flutter_localstorage.git
+</code></pre>
+<pre class="language-sh"><code class="language-sh">flutter packages get
+</code></pre>
+<h2 id="api">API</h2>
+<h3 id="new-localstoragestring-key"><code>new LocalStorage(String: key)</code></h3>
+<p>Creates instance of a local storage. Key is used as a filename</p>
+<h3 id="futurebool-get-ready"><code>Future&lt;bool&gt; get ready</code></h3>
+<p>A future indicating if localstorage intance is ready for read/write operations</p>
+<h3 id="futurevoid-setitemstring-key-dynamic-value"><code>Future&lt;void&gt; setItem(String key, dynamic value)</code></h3>
+<p>Saves item by key to a storage. Value should be json encodable (<code>json.encode()</code> is called under the hood).</p>
+<h3 id="getitemstring-key"><code>getItem(String key)</code></h3>
+<p>Returns a value from storage by key</p>
+<h3 id="futurevoid-deleteitemstring-key"><code>Future&lt;void&gt; deleteItem(String key)</code></h3>
+<p>Removes item from storage by key</p>
+<h2 id="example">Example</h2>
+<pre class="language-dart"><code class="language-dart">class SomeWidget extends StatelessWidget {
+  final LocalStorage storage = new LocalStorage('some_key');
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: storage.ready,
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.data == true) {
+          Map&lt;String, dynamic&gt; data = storage.getItem('key');
+
+          return SomeDataView(data: data);
+        } else {
+          return SomeLoadingStateWidget();
+        }
+      },
+    );
+  }
+}
+</code></pre>
+<h2 id="license">License</h2>
+<p>MIT</p>
+      </section>
+      
+        <section class="summary">
+            <h2>Libraries</h2>
+          <dl>
+            <dt id="localstorage">
+              <span class="name"><a href="localstorage/localstorage-library.html">localstorage</a></span>
+            </dt>
+            <dd>
+              
+            </dd>          </dl>
+        </section>
+
+  </div> <!-- /.main-content -->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    localstorage 1.0.0
+  </span>
+
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="static-assets/typeahead.bundle.min.js"></script>
+<script src="static-assets/highlight.pack.js"></script>
+<script src="static-assets/URI.js"></script>
+<script src="static-assets/script.js"></script>
+
+
+</body>
+
+</html>
