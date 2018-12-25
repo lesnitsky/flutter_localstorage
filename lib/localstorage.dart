@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:path_provider/path_provider.dart';
+import 'dart:collection';
 
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
@@ -11,7 +12,7 @@ class LocalStorage {
   File _file;
   Map<String, dynamic> _data;
 
-  /// A future indicating if localstorage intance is ready for read/write operations
+  /// A future indicating if localstorage instance is ready for read/write operations
   Future<bool> ready;
 
   factory LocalStorage(String key) {
@@ -27,7 +28,7 @@ class LocalStorage {
 
   LocalStorage._internal(String key) {
     _filename = key;
-    _data = new Map();
+    _data = new LinkedHashMap();  //Use LinkedHashMap to preserve order
 
     ready = new Future<bool>(() async {
       await this._init();
@@ -40,8 +41,6 @@ class LocalStorage {
     final path = documentDir.path;
 
     _file = File('$path/$_filename.json');
-
-    await _file;
 
     var exists = _file.existsSync();
 
@@ -76,5 +75,25 @@ class LocalStorage {
   /// Returns a value from storage by key
   getItem(String key) {
     return _data[key];
+  }
+
+  /// Check if the store contains
+  hasItem(String key){
+    if(_data.containsKey(key))
+      return true;
+    else
+      return false;
+  }
+
+  /// Removes/deletes all the items in the store
+  clear() async {
+    _data.clear();
+
+    return _flush();
+  }
+
+  /// Get a Set consisting of all the keys in the store
+  keys(){
+    return LinkedHashSet.of(_data.keys);
   }
 }
