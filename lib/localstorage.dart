@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show ValueNotifier;
 import 'package:path_provider/path_provider.dart';
 
 /// Creates instance of a local storage. Key is used as a filename
@@ -10,6 +11,9 @@ class LocalStorage {
   String _filename;
   File _file;
   Map<String, dynamic> _data;
+
+  /// [ValueNotifier] which notifies about errors during storage initialization
+  ValueNotifier<Error> onError;
 
   /// A future indicating if localstorage intance is ready for read/write operations
   Future<bool> ready;
@@ -28,6 +32,7 @@ class LocalStorage {
   LocalStorage._internal(String key) {
     _filename = key;
     _data = new Map();
+    onError = new ValueNotifier(null);
 
     ready = new Future<bool>(() async {
       await this._init();
@@ -36,22 +41,34 @@ class LocalStorage {
   }
 
   _init() async {
-    final documentDir = await getApplicationDocumentsDirectory();
-    final path = documentDir.path;
+    try {
+      final documentDir = await getApplicationDocumentsDirectory();
+      final path = documentDir.path;
 
-    _file = File('$path/$_filename.json');
+      _file = File('$path/$_filename.json');
 
-    await _file;
+      await _file;
 
-    var exists = _file.existsSync();
+      var exists = _file.existsSync();
 
-    if (exists) {
-      final content = await _file.readAsString();
-      _data = json.decode(content);
-    } else {
-      _file.writeAsStringSync('{}');
-      return _init();
+      if (exists) {
+        final content = await _file.readAsString();
+
+        try {
+          _data = json.decode(content);
+        } catch (err) {
+          onError.value = err;
+          _data = {};
+          _file.writeAsStringSync('{}');
+        }
+      } else {
+        _file.writeAsStringSync('{}');
+        return _init();
+      }
+    } on Error catch (err) {
+      onError.value = err;
     }
+    
   }
 
   /// Saves item by key to a storage. Value should be json encodable (`json.encode()` is called under the hood).
