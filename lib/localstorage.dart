@@ -68,7 +68,11 @@ class LocalStorage {
     } on Error catch (err) {
       onError.value = err;
     }
-    
+  }
+
+  /// Returns a value from storage by key
+  getItem(String key) {
+    return _data[key];
   }
 
   /// Saves item by key to a storage. Value should be json encodable (`json.encode()` is called under the hood).
@@ -85,13 +89,14 @@ class LocalStorage {
     return _flush();
   }
 
+  /// Removes all items from localstorage
+  clear() {
+    _data.clear();
+    return _flush();
+  }
+
   _flush() async {
     final serialized = json.encode(_data);
     await _file.writeAsString(serialized);
-  }
-
-  /// Returns a value from storage by key
-  getItem(String key) {
-    return _data[key];
   }
 }

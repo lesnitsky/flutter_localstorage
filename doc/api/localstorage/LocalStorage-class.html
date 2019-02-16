@@ -46,11 +46,12 @@
     
     
     
+    
     </ol>
   </div>
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>LocalStorage class</h1>
+      <h1>LocalStorage class </h1>
 
     <section class="desc markdown">
       <p>Creates instance of a local storage. Key is used as a filename</p>
@@ -75,9 +76,17 @@
       <h2>Properties</h2>
 
       <dl class="properties">
+        <dt id="onError" class="property">
+          <span class="name"><a href="localstorage/LocalStorage/onError.html">onError</a></span>
+          <span class="signature">&#8596; ValueNotifier<span class="signature">&lt;<wbr><span class="type-parameter">Error</span>&gt;</span></span> 
+        </dt>
+        <dd>
+          <code>ValueNotifier</code> which notifies about errors during storage initialization
+          <div class="features">read / write</div>
+</dd>
         <dt id="ready" class="property">
           <span class="name"><a href="localstorage/LocalStorage/ready.html">ready</a></span>
-          <span class="signature">&#8596; Future<span class="signature">&lt;<wbr><span class="type-parameter">bool</span>&gt;</span></span>
+          <span class="signature">&#8596; Future<span class="signature">&lt;<wbr><span class="type-parameter">bool</span>&gt;</span></span> 
         </dt>
         <dd>
           A future indicating if localstorage intance is ready for read/write operations
@@ -85,7 +94,7 @@
 </dd>
         <dt id="hashCode" class="property inherited">
           <span class="name"><a href="localstorage/LocalStorage/hashCode.html">hashCode</a></span>
-          <span class="signature">&#8594; int</span>
+          <span class="signature">&#8594; int</span> 
         </dt>
         <dd class="inherited">
           The hash code for this object. <a href="localstorage/LocalStorage/hashCode.html">[...]</a>
@@ -93,7 +102,7 @@
 </dd>
         <dt id="runtimeType" class="property inherited">
           <span class="name"><a href="localstorage/LocalStorage/runtimeType.html">runtimeType</a></span>
-          <span class="signature">&#8594; Type</span>
+          <span class="signature">&#8594; Type</span> 
         </dt>
         <dd class="inherited">
           A representation of the runtime type of the object.
@@ -105,11 +114,20 @@
     <section class="summary offset-anchor" id="instance-methods">
       <h2>Methods</h2>
       <dl class="callables">
+        <dt id="clear" class="callable">
+          <span class="name"><a href="localstorage/LocalStorage/clear.html">clear</a></span><span class="signature">(<wbr>)
+            <span class="returntype parameter">&#8594; dynamic</span>
+          </span>
+          </dt>
+        <dd>
+          Removes all items from localstorage
+          
+</dd>
         <dt id="deleteItem" class="callable">
           <span class="name"><a href="localstorage/LocalStorage/deleteItem.html">deleteItem</a></span><span class="signature">(<wbr><span class="parameter" id="deleteItem-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
             <span class="returntype parameter">&#8594; Future</span>
           </span>
-        </dt>
+          </dt>
         <dd>
           Removes item from storage by key
           
@@ -118,7 +136,7 @@
           <span class="name"><a href="localstorage/LocalStorage/getItem.html">getItem</a></span><span class="signature">(<wbr><span class="parameter" id="getItem-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
             <span class="returntype parameter">&#8594; dynamic</span>
           </span>
-        </dt>
+          </dt>
         <dd>
           Returns a value from storage by key
           
@@ -127,7 +145,7 @@
           <span class="name"><a href="localstorage/LocalStorage/setItem.html">setItem</a></span><span class="signature">(<wbr><span class="parameter" id="setItem-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="setItem-param-value"><span class="type-annotation">dynamic</span> <span class="parameter-name">value</span></span>)
             <span class="returntype parameter">&#8594; Future</span>
           </span>
-        </dt>
+          </dt>
         <dd>
           Saves item by key to a storage. Value should be json encodable (<code>json.encode()</code> is called under the hood).
           
@@ -136,7 +154,7 @@
           <span class="name"><a href="localstorage/LocalStorage/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation">Invocation</span> <span class="parameter-name">invocation</span></span>)
             <span class="returntype parameter">&#8594; dynamic</span>
           </span>
-        </dt>
+          </dt>
         <dd class="inherited">
           Invoked when a non-existent method or property is accessed. <a href="localstorage/LocalStorage/noSuchMethod.html">[...]</a>
           <div class="features">inherited</div>
@@ -145,7 +163,7 @@
           <span class="name"><a href="localstorage/LocalStorage/toString.html">toString</a></span><span class="signature">(<wbr>)
             <span class="returntype parameter">&#8594; String</span>
           </span>
-        </dt>
+          </dt>
         <dd class="inherited">
           Returns a string representation of this object.
           <div class="features">inherited</div>
@@ -160,7 +178,7 @@
           <span class="name"><a href="localstorage/LocalStorage/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation">dynamic</span> <span class="parameter-name">other</span></span>)
             <span class="returntype parameter">&#8594; bool</span>
           </span>
-        </dt>
+          </dt>
         <dd class="inherited">
           The equality operator. <a href="localstorage/LocalStorage/operator_equals.html">[...]</a>
           <div class="features">inherited</div>
@@ -181,11 +199,13 @@
       <li class="section-title">
         <a href="localstorage/LocalStorage-class.html#instance-properties">Properties</a>
       </li>
+      <li><a href="localstorage/LocalStorage/onError.html">onError</a></li>
       <li><a href="localstorage/LocalStorage/ready.html">ready</a></li>
       <li class="inherited"><a href="localstorage/LocalStorage/hashCode.html">hashCode</a></li>
       <li class="inherited"><a href="localstorage/LocalStorage/runtimeType.html">runtimeType</a></li>
     
       <li class="section-title"><a href="localstorage/LocalStorage-class.html#instance-methods">Methods</a></li>
+      <li><a href="localstorage/LocalStorage/clear.html">clear</a></li>
       <li><a href="localstorage/LocalStorage/deleteItem.html">deleteItem</a></li>
       <li><a href="localstorage/LocalStorage/getItem.html">getItem</a></li>
       <li><a href="localstorage/LocalStorage/setItem.html">setItem</a></li>
@@ -204,7 +224,7 @@
 
 <footer>
   <span class="no-break">
-    localstorage 1.0.0
+    localstorage 1.2.0
   </span>
 
 </footer>

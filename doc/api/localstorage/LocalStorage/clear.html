@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the LocalStorage constructor from the Class LocalStorage class from the localstorage library, for the Dart programming language.">
-  <title>LocalStorage constructor - LocalStorage class - localstorage library - Dart API</title>
+  <meta name="description" content="API docs for the clear method from the LocalStorage class, for the Dart programming language.">
+  <title>clear method - LocalStorage class - localstorage library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="../..">
 
@@ -26,9 +26,9 @@
     <li><a href="index.html">localstorage</a></li>
     <li><a href="localstorage/localstorage-library.html">localstorage</a></li>
     <li><a href="localstorage/LocalStorage-class.html">LocalStorage</a></li>
-    <li class="self-crumb">LocalStorage factory constructor</li>
+    <li class="self-crumb">clear method</li>
   </ol>
-  <div class="self-name">LocalStorage</div>
+  <div class="self-name">clear</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -64,28 +64,26 @@
     
     
     </ol>
-  </div><!--/.sidebar-offcanvas-left-->
+  </div><!--/.sidebar-offcanvas-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>LocalStorage constructor</h1>
+    <h1>clear method</h1>
 
     <section class="multi-line-signature">
+      <span class="returntype">dynamic</span>
+      <span class="name ">clear</span>
+(<wbr>)
       
-      <span class="name ">LocalStorage</span>(<wbr><span class="parameter" id="-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
     </section>
-
+    <section class="desc markdown">
+      <p>Removes all items from localstorage</p>
+    </section>
     
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">factory LocalStorage(String key) {
-  if (_cache.containsKey(key)) {
-    return _cache[key];
-  } else {
-    final instance = LocalStorage._internal(key);
-    _cache[key] = instance;
-
-    return instance;
-  }
+      <pre class="language-dart"><code class="language-dart">clear() {
+  _data.clear();
+  return _flush();
 }</code></pre>
     </section>
 

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the LocalStorage constructor from the Class LocalStorage class from the localstorage library, for the Dart programming language.">
-  <title>LocalStorage constructor - LocalStorage class - localstorage library - Dart API</title>
+  <meta name="description" content="API docs for the onError property from the LocalStorage class, for the Dart programming language.">
+  <title>onError property - LocalStorage class - localstorage library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="../..">
 
@@ -26,9 +26,9 @@
     <li><a href="index.html">localstorage</a></li>
     <li><a href="localstorage/localstorage-library.html">localstorage</a></li>
     <li><a href="localstorage/LocalStorage-class.html">LocalStorage</a></li>
-    <li class="self-crumb">LocalStorage factory constructor</li>
+    <li class="self-crumb">onError property</li>
   </ol>
-  <div class="self-name">LocalStorage</div>
+  <div class="self-name">onError</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -64,30 +64,25 @@
     
     
     </ol>
-  </div><!--/.sidebar-offcanvas-left-->
+  </div><!--/.sidebar-offcanvas-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>LocalStorage constructor</h1>
+    <h1>onError property</h1>
 
-    <section class="multi-line-signature">
-      
-      <span class="name ">LocalStorage</span>(<wbr><span class="parameter" id="-param-key"><span class="type-annotation">String</span> <span class="parameter-name">key</span></span>)
-    </section>
+        <section class="multi-line-signature">
+          <span class="returntype">ValueNotifier<span class="signature">&lt;<wbr><span class="type-parameter">Error</span>&gt;</span></span>
+          <span class="name ">onError</span>
+          <div class="features">read / write</div>
+        </section>
+        <section class="desc markdown">
+          <p><code>ValueNotifier</code> which notifies about errors during storage initialization</p>
+        </section>
+                <section class="summary source-code" id="source">
+          <h2><span>Implementation</span> </h2>
+          <pre class="language-dart"><code class="language-dart">ValueNotifier&lt;Error&gt; onError
 
-    
-    <section class="summary source-code" id="source">
-      <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">factory LocalStorage(String key) {
-  if (_cache.containsKey(key)) {
-    return _cache[key];
-  } else {
-    final instance = LocalStorage._internal(key);
-    _cache[key] = instance;
-
-    return instance;
-  }
-}</code></pre>
-    </section>
+</code></pre>
+        </section>
 
   </div> <!-- /.main-content -->
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="made with love by dartdoc 0.20.4">
+  <meta name="generator" content="made with love by dartdoc 0.24.1">
   <meta name="description" content="localstorage API docs, for the Dart programming language.">
   <title>localstorage - Dart API docs</title>
 
@@ -21,7 +21,7 @@
 
 <header id="title">
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li class="self-crumb">localstorage package</li>
+    <li><a href="https://github.com/lesnitsky/flutter_localstorage">localstorage package</a></li>
   </ol>
   <div class="self-name">localstorage</div>
   <form class="search navbar-right" role="search">
@@ -44,25 +44,14 @@
         <h1 id="localstorage">Localstorage</h1>
 <p>Simple json file-based storage for flutter</p>
 <h2 id="installation">Installation</h2>
-<p><code>pubspec.yaml</code></p>
+<p>Add dependency to <code>pubspec.yaml</code></p>
 <pre class="language-yaml"><code class="language-yaml">dependencies:
   ...
-  localstorage:
-    git: https://github.com/lesnitsky/flutter_localstorage.git
+  localstorage: ^1.2.0
 </code></pre>
+<p>Run in your terminal</p>
 <pre class="language-sh"><code class="language-sh">flutter packages get
 </code></pre>
-<h2 id="api">API</h2>
-<h3 id="new-localstoragestring-key"><code>new LocalStorage(String: key)</code></h3>
-<p>Creates instance of a local storage. Key is used as a filename</p>
-<h3 id="futurebool-get-ready"><code>Future&lt;bool&gt; get ready</code></h3>
-<p>A future indicating if localstorage intance is ready for read/write operations</p>
-<h3 id="futurevoid-setitemstring-key-dynamic-value"><code>Future&lt;void&gt; setItem(String key, dynamic value)</code></h3>
-<p>Saves item by key to a storage. Value should be json encodable (<code>json.encode()</code> is called under the hood).</p>
-<h3 id="getitemstring-key"><code>getItem(String key)</code></h3>
-<p>Returns a value from storage by key</p>
-<h3 id="futurevoid-deleteitemstring-key"><code>Future&lt;void&gt; deleteItem(String key)</code></h3>
-<p>Removes item from storage by key</p>
 <h2 id="example">Example</h2>
 <pre class="language-dart"><code class="language-dart">class SomeWidget extends StatelessWidget {
   final LocalStorage storage = new LocalStorage('some_key');
@@ -92,7 +81,7 @@
             <h2>Libraries</h2>
           <dl>
             <dt id="localstorage">
-              <span class="name"><a href="localstorage/localstorage-library.html">localstorage</a></span>
+              <span class="name"><a href="localstorage/localstorage-library.html">localstorage</a></span> 
             </dt>
             <dd>
               
@@ -105,7 +94,7 @@
 
 <footer>
   <span class="no-break">
-    localstorage 1.0.0
+    localstorage 1.2.0
   </span>
 
 </footer>
