@@ -19,7 +19,7 @@ class LocalStorage {
   Future<bool> ready;
 
   /// Prevents the file from being accessed more than once
-  Future<void> lock;
+  Future<void> _lock;
 
   factory LocalStorage(String key) {
     if (_cache.containsKey(key)) {
@@ -97,13 +97,13 @@ class LocalStorage {
   }
 
   Future<void> _attemptFlush() async {
-    if(lock != null) {
-      await lock;
+    if(_lock != null) {
+      await _lock;
     }
 
-    lock = _flush();
+    _lock = _flush();
 
-    return lock;
+    return _lock;
   }
 
   Future<void> _flush() async {
