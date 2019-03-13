@@ -101,6 +101,7 @@ class LocalStorage {
       await _lock;
     }
 
+    // Lock will complete when file has been written
     _lock = _flush();
 
     return _lock;
