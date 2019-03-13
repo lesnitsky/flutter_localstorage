@@ -43,7 +43,7 @@ class LocalStorage {
     });
   }
 
-  _init() async {
+  Future<void> _init() async {
     try {
       final documentDir = await getApplicationDocumentsDirectory();
       final path = documentDir.path;
@@ -72,26 +72,26 @@ class LocalStorage {
   }
 
   /// Returns a value from storage by key
-  getItem(String key) {
+  dynamic getItem(String key) {
     return _data[key];
   }
 
   /// Saves item by key to a storage. Value should be json encodable (`json.encode()` is called under the hood).
-  setItem(String key, value) async {
+  Future<void> setItem(String key, value) async {
     _data[key] = value;
 
     return _attemptFlush();
   }
 
   /// Removes item from storage by key
-  deleteItem(String key) async {
+  Future<void> deleteItem(String key) async {
     _data.remove(key);
 
     return _attemptFlush();
   }
 
   /// Removes all items from localstorage
-  clear() {
+  Future<void> clear() {
     _data.clear();
     return _attemptFlush();
   }
