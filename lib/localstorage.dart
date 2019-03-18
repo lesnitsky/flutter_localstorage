@@ -43,9 +43,18 @@ class LocalStorage {
     });
   }
 
+  Future<Directory> _getDocumentDir() async {
+    if (Platform.isMacOS || Platform.isLinux) {
+      return Directory('${Platform.environment['HOME']}/.config');
+    } else if (Platform.isWindows) {
+      return Directory('${Platform.environment['UserProfile']}\\.config');
+    }
+    return await getApplicationDocumentsDirectory();
+  }
+
   Future<void> _init() async {
     try {
-      final documentDir = await getApplicationDocumentsDirectory();
+      final documentDir = await _getDocumentDir();
       final path = documentDir.path;
 
       _file = File('$path/$_filename.json');
