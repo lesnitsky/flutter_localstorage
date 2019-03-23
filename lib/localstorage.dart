@@ -18,6 +18,9 @@ class LocalStorage {
   /// A future indicating if localstorage intance is ready for read/write operations
   Future<bool> ready;
 
+  /// Prevents the file from being accessed more than once
+  Future<void> _lock;
+
   factory LocalStorage(String key) {
     if (_cache.containsKey(key)) {
       return _cache[key];
@@ -49,14 +52,12 @@ class LocalStorage {
     return await getApplicationDocumentsDirectory();
   }
 
-  _init() async {
+  Future<void> _init() async {
     try {
       final documentDir = await _getDocumentDir();
       final path = documentDir.path;
 
       _file = File('$path/$_filename.json');
-
-      await _file;
 
       var exists = _file.existsSync();
 
@@ -80,32 +81,48 @@ class LocalStorage {
   }
 
   /// Returns a value from storage by key
-  getItem(String key) {
+  dynamic getItem(String key) {
     return _data[key];
   }
 
   /// Saves item by key to a storage. Value should be json encodable (`json.encode()` is called under the hood).
-  setItem(String key, value) async {
+  Future<void> setItem(String key, value) async {
     _data[key] = value;
 
-    return _flush();
+    return _attemptFlush();
   }
 
   /// Removes item from storage by key
-  deleteItem(String key) async {
+  Future<void> deleteItem(String key) async {
     _data.remove(key);
 
-    return _flush();
+    return _attemptFlush();
   }
 
   /// Removes all items from localstorage
-  clear() {
+  Future<void> clear() {
     _data.clear();
-    return _flush();
+    return _attemptFlush();
   }
 
-  _flush() async {
+  Future<void> _attemptFlush() async {
+    if(_lock != null) {
+      await _lock;
+    }
+
+    // Lock will complete when file has been written
+    _lock = _flush();
+
+    return _lock;
+  }
+
+  Future<void> _flush() async {
     final serialized = json.encode(_data);
-    await _file.writeAsString(serialized);
+    try {
+      await _file.writeAsString(serialized);
+    } catch (e) {
+      rethrow;
+    }
+    return;
   }
 }
