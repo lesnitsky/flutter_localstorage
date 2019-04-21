@@ -1,3 +1,8 @@
+## 1.3.0
+
+- add optional `path`argument to specify storage folder
+- fixes for flutter-desktop-embedding
+
 ## 1.2.0
 
 - add `clear` method
