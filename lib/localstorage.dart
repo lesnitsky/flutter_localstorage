@@ -10,6 +10,7 @@ class LocalStorage {
 
   String _filename;
   File _file;
+  String _path;
   Map<String, dynamic> _data;
 
   /// [ValueNotifier] which notifies about errors during storage initialization
@@ -21,20 +22,23 @@ class LocalStorage {
   /// Prevents the file from being accessed more than once
   Future<void> _lock;
 
-  factory LocalStorage(String key) {
+  /// [key] is used as a filename
+  /// Optional [path] is used as a directory. Defaluts to application document directory
+  factory LocalStorage(String key, [String path]) {
     if (_cache.containsKey(key)) {
       return _cache[key];
     } else {
-      final instance = LocalStorage._internal(key);
+      final instance = LocalStorage._internal(key, path);
       _cache[key] = instance;
 
       return instance;
     }
   }
 
-  LocalStorage._internal(String key) {
+  LocalStorage._internal(String key, [String path]) {
     _filename = key;
     _data = new Map();
+    _path = path;
     onError = new ValueNotifier(null);
 
     ready = new Future<bool>(() async {
@@ -54,8 +58,7 @@ class LocalStorage {
 
   Future<void> _init() async {
     try {
-      final documentDir = await _getDocumentDir();
-      final path = documentDir.path;
+      final path = _path ?? (await _getDocumentDir()).path;
 
       _file = File('$path/$_filename.json');
 
@@ -106,7 +109,7 @@ class LocalStorage {
   }
 
   Future<void> _attemptFlush() async {
-    if(_lock != null) {
+    if (_lock != null) {
       await _lock;
     }
 
