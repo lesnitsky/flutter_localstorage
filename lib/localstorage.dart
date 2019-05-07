@@ -122,6 +122,7 @@ class LocalStorage {
   Future<void> _flush() async {
     final serialized = json.encode(_data);
     try {
+      await ready;
       await _file.writeAsString(serialized);
     } catch (e) {
       rethrow;
