@@ -1,3 +1,8 @@
+## 1.3.1
+- update `README.md` documentation
+- bump `package_provider` dependency to address `getApplicationSupportDirectory`
+- fix `noSuchMethodError` in `_flush` according to PR [#15](https://github.com/lesnitsky/flutter_localstorage/pull/15) needed to get around issue [#14](https://github.com/lesnitsky/flutter_localstorage/issues/14)
+
 ## 1.3.0
 
 - add optional `path`argument to specify storage folder
