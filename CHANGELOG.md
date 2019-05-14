@@ -1,3 +1,8 @@
+## 1.3.1
+- update `README.md` documentation
+- bump `package_provider` dependency to address `getApplicationSupportDirectory`
+- fix `noSuchMethodError` in `_flush`
+
 ## 1.3.0
 
 - add optional `path`argument to specify storage folder

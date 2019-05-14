@@ -9,7 +9,7 @@ Add dependency to `pubspec.yaml`
 ```yaml
 dependencies:
   ...
-  localstorage: ^1.2.0
+  localstorage: ^1.3.1
 ```
 
 Run in your terminal
