@@ -88,9 +88,18 @@ class LocalStorage {
     return _data[key];
   }
 
-  /// Saves item by key to a storage. Value should be json encodable (`json.encode()` is called under the hood).
-  Future<void> setItem(String key, value) async {
-    _data[key] = value;
+  /// Saves item by [key] to a storage. Value should be json encodable (`json.encode()` is called under the hood).
+  /// After item was set to storage, consecutive [getItem] will return `json` representation of this item
+  /// if [toEncodable] is provided, it is called before setting item to storage
+  /// otherwise `value.toJson()` is called
+  Future<void> setItem(
+    String key,
+    value, [
+    Object toEncodable(Object nonEncodable),
+  ]) async {
+    _data[key] = json.decode(
+      json.encode(toEncodable != null ? toEncodable(value) : value),
+    );
 
     return _attemptFlush();
   }

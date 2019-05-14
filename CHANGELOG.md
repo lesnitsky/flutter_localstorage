@@ -1,4 +1,10 @@
+## 2.0.0
+
+- fix inconsitent return format of `getItem`. It now always returns `JsonEncodable` representation of an item
+- add optional `toEncodable` arg to `setItem`
+
 ## 1.3.1
+
 - update `README.md` documentation
 - bump `package_provider` dependency to address `getApplicationSupportDirectory`
 - fix `noSuchMethodError` in `_flush`
