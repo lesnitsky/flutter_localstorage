@@ -2,6 +2,11 @@
 
 Simple json file-based storage for flutter
 
+> Support me
+
+![GitHub stars](https://img.shields.io/github/stars/lesnitsky/flutter_localstorage.svg?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/lesnitsky_a.svg?label=Follow%20me&style=social)
+
 ## Installation
 
 Add dependency to `pubspec.yaml`
@@ -45,3 +50,8 @@ class SomeWidget extends StatelessWidget {
 ## License
 
 MIT
+
+## Support me
+
+![GitHub stars](https://img.shields.io/github/stars/lesnitsky/flutter_localstorage.svg?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/lesnitsky_a.svg?label=Follow%20me&style=social)
