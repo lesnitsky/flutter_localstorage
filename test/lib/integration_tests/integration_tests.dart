@@ -8,9 +8,43 @@ import 'dart:math';
 import 'package:localstorage/localstorage.dart';
 
 class IntegrationTests {
-  static Future<String> assertTest() async {
-    final key = _randomTxt;
+  IntegrationTests.private();
 
+  static final _seed = Random.secure();
+
+  static Future<String> assertTest() async {
+    const nRuns = 200;
+
+    final keys = List.generate(nRuns, (_) => _randomTxt);
+
+    await Future.wait(keys.map((key) => _basicTest(key)));
+
+    const msg = 'assert test completed successfully';
+
+    print(msg);
+    return msg;
+  }
+
+  static Future<String> tputTest() async {
+    final t0 = DateTime.now();
+
+    await Future.delayed(Duration(seconds: 5));
+
+    final int eventCount = 1000;
+    final t1 = DateTime.now();
+
+    final eventTput = eventCount / t1.difference(t0).inSeconds;
+    print('throughput: ${eventTput.toStringAsFixed(2)} eps');
+
+    assert(eventTput >= 100);
+
+    const msg = 'tput test completed successfully';
+
+    print(msg);
+    return msg;
+  }
+
+  static Future<void> _basicTest(String key) async {
     // write a sample map
     await (() async {
       final storage = LocalStorage(key);
@@ -49,35 +83,8 @@ class IntegrationTests {
 
       assert(await storage.getItem(key) == null);
     })();
-
-    const msg = 'assert test completed successfully';
-
-    print(msg);
-    return msg;
   }
 
-  static Future<String> tputTest() async {
-    final t0 = DateTime.now();
-
-    await Future.delayed(Duration(seconds: 5));
-
-    final int eventCount = 1000;
-    final t1 = DateTime.now();
-
-    final eventTput = eventCount / t1.difference(t0).inSeconds;
-    print('throughput: ${eventTput.toStringAsFixed(2)} eps');
-
-    assert(eventTput >= 100);
-
-    const msg = 'tput test completed successfully';
-
-    print(msg);
-    return msg;
-  }
-
-  static String get _randomTxt {
-    final random = Random.secure();
-
-    return random.nextInt(1000000000).toString();
-  }
+  static int get _randomNum => _seed.nextInt(1<<32);
+  static String get _randomTxt => _randomNum.toString();
 }
