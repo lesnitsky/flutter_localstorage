@@ -56,6 +56,7 @@ class _TestAppState extends State<TestApp> {
       }
 
       assertEnabled = false;
+      setState(() => assertTxt = '');
 
       IntegrationTests.assertTest()
           .then((res) => setState(() => assertTxt = res))
@@ -80,6 +81,7 @@ class _TestAppState extends State<TestApp> {
       }
 
       tputEnabled = false;
+      setState(() => tputTxt = '');
 
       IntegrationTests.tputTest()
           .then((res) => setState(() => tputTxt = res))
