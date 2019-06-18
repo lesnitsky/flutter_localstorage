@@ -1,0 +1,21 @@
+name: test_driver
+version: 1.0.0+1
+description: A new Flutter project.
+
+environment:
+  flutter: ^1.5.0
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_driver:
+    sdk: flutter
+  test: any
+
+flutter:
+  uses-material-design: true
