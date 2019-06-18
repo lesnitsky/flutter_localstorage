@@ -76,46 +76,48 @@ class TestAppState extends State<TestApp> {
   }
 
   List<Widget> get assertTest {
+    final icon = Icon(Icons.play_arrow);
+
+    final handler = () {
+      if (!assertEnabled) {
+        return;
+      }
+
+      assertEnabled = false;
+
+      TestSuite.assertTest()
+          .then((res) => setState(() => assertTxt = res))
+          .catchError((dynamic e) => setState(() => assertTxt = '$e'))
+          .whenComplete(() => setState(() => assertEnabled = true));
+    };
+
     return [
       Text('ASSERT TEST'),
-      IconButton(
-          key: Key('assertBtn'),
-          icon: Icon(Icons.play_arrow),
-          onPressed: () {
-            if (!assertEnabled) {
-              return;
-            }
-
-            assertEnabled = false;
-
-            TestSuite.assertTest()
-                .then((res) => setState(() => assertTxt = res))
-                .catchError((dynamic e) => setState(() => assertTxt = '$e'))
-                .whenComplete(() => setState(() => assertEnabled = true));
-          }),
+      IconButton(key: Key('assertBtn'), icon: icon, onPressed: handler),
       Text(assertTxt, key: Key('assertTxt')),
       Divider()
     ];
   }
 
   List<Widget> get tputTest {
+    final icon = Icon(Icons.play_arrow);
+
+    final handler = () {
+      if (!tputEnabled) {
+        return;
+      }
+
+      tputEnabled = false;
+
+      TestSuite.tputTest()
+          .then((res) => setState(() => tputTxt = res))
+          .catchError((dynamic e) => setState(() => tputTxt = '$e'))
+          .whenComplete(() => setState(() => tputEnabled = true));
+    };
+
     return [
       Text('THROUGHPUT TEST'),
-      IconButton(
-          key: Key('tputBtn'),
-          icon: Icon(Icons.play_arrow),
-          onPressed: () {
-            if (!tputEnabled) {
-              return;
-            }
-
-            tputEnabled = false;
-
-            TestSuite.tputTest()
-                .then((res) => setState(() => tputTxt = res))
-                .catchError((dynamic e) => setState(() => tputTxt = '$e'))
-                .whenComplete(() => setState(() => tputEnabled = true));
-          }),
+      IconButton(key: Key('tputBtn'), icon: icon, onPressed: handler),
       Text(tputTxt, key: Key('tputTxt')),
     ];
   }
