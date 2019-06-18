@@ -1,14 +1,14 @@
 // ignore_for_file: public_member_api_docs
 
 /// @nodoc
-library test_driver;
+library test_app;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 
 void main() {
   enableFlutterDriverExtension();
-  runApp(MyApp());
+  runApp(TestApp());
 }
 
 class TestSuite {
@@ -35,31 +35,45 @@ class TestSuite {
   }
 }
 
-class MyApp extends StatefulWidget {
+class TestApp extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => MyAppState();
+  State<StatefulWidget> createState() {
+    return TestAppState();
+  }
 }
 
-class MyAppState extends State<MyApp> {
+class TestAppState extends State<TestApp> {
   String assertTxt = '', tputTxt = '';
 
   bool assertEnabled = true, tputEnabled = true;
 
   @override
-  Widget build(_) => MaterialApp(home: home);
-
-  Widget get home => Scaffold(appBar: appBar, body: body, bottomNavigationBar: bottomBar);
-
-  Widget get appBar => AppBar(title: Text('Integration Test'));
-
-  Widget get body {
-    return Center(
-        child: Column(children: [...assertTest, Divider(), ...tputTest ],
-      ),
-    );
+  Widget build(_) {
+    return MaterialApp(home: home);
   }
 
-  Widget get bottomBar => BottomAppBar(child: Row());
+  Widget get home {
+    return Scaffold(appBar: appBar, body: body, bottomNavigationBar: bottomBar);
+  }
+
+  Widget get appBar {
+    return AppBar(title: Text('Integration Test'));
+  }
+
+  Widget get bottomBar {
+    return BottomAppBar(child: Row());
+  }
+
+  Widget get body {
+    return Center(child: column);
+  }
+
+  Widget get column {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: []..addAll(assertTest)..addAll(tputTest),
+    );
+  }
 
   List<Widget> get assertTest {
     return [
@@ -71,6 +85,7 @@ class MyAppState extends State<MyApp> {
             if (!assertEnabled) {
               return;
             }
+
             assertEnabled = false;
 
             TestSuite.assertTest()
@@ -79,6 +94,7 @@ class MyAppState extends State<MyApp> {
                 .whenComplete(() => setState(() => assertEnabled = true));
           }),
       Text(assertTxt, key: Key('assertTxt')),
+      Divider()
     ];
   }
 
@@ -92,6 +108,7 @@ class MyAppState extends State<MyApp> {
             if (!tputEnabled) {
               return;
             }
+
             tputEnabled = false;
 
             TestSuite.tputTest()
