@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
-  static final Map<String, LocalStorage> _cache = Map();
+  static final Map<String, LocalStorage> _cache = new Map();
 
   String _filename;
   File _file;
@@ -37,11 +37,11 @@ class LocalStorage {
 
   LocalStorage._internal(String key, [String path]) {
     _filename = key;
-    _data = Map();
+    _data = new Map();
     _path = path;
-    onError = ValueNotifier(null);
+    onError = new ValueNotifier(null);
 
-    ready = Future<bool>(() async {
+    ready = new Future<bool>(() async {
       await this._init();
       return true;
     });

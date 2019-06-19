@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:localstorage/localstorage.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return new MaterialApp(
       title: 'Localstorage Demo',
-      theme: ThemeData(
+      theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: new HomePage(),
     );
   }
 }
@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class TodoItem {
@@ -32,7 +32,7 @@ class TodoItem {
   TodoItem({this.title, this.done});
 
   toJSONEncodable() {
-    Map<String, dynamic> m = Map();
+    Map<String, dynamic> m = new Map();
 
     m['title'] = title;
     m['done'] = done;
@@ -45,7 +45,7 @@ class TodoList {
   List<TodoItem> items;
 
   TodoList() {
-    items = List();
+    items = new List();
   }
 
   toJSONEncodable() {
@@ -56,10 +56,10 @@ class TodoList {
 }
 
 class _MyHomePageState extends State<HomePage> {
-  final TodoList list = TodoList();
-  final LocalStorage storage = LocalStorage('todo_app');
+  final TodoList list = new TodoList();
+  final LocalStorage storage = new LocalStorage('todo_app');
   bool initialized = false;
-  TextEditingController controller = TextEditingController();
+  TextEditingController controller = new TextEditingController();
 
   _toggleItem(TodoItem item) {
     setState(() {
@@ -70,7 +70,7 @@ class _MyHomePageState extends State<HomePage> {
 
   _addItem(String title) {
     setState(() {
-      final item = TodoItem(title: title, done: false);
+      final item = new TodoItem(title: title, done: false);
       list.items.add(item);
       _saveToStorage();
     });
@@ -82,9 +82,9 @@ class _MyHomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Localstorage demo'),
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('Localstorage demo'),
       ),
       body: Container(
           padding: EdgeInsets.all(10.0),
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<HomePage> {
                 if (items != null) {
                   (items as List).forEach((item) {
                     final todoItem =
-                        TodoItem(title: item['title'], done: item['done']);
+                        new TodoItem(title: item['title'], done: item['done']);
                     list.items.add(todoItem);
                   });
                 }
