@@ -56,7 +56,7 @@ class _TestAppState extends State<TestApp> {
       }
 
       assertEnabled = false;
-      setState(() => assertTxt = '');
+      setState(() => assertTxt = 'assert test running...');
 
       IntegrationTests.assertTest()
           .then((res) => setState(() => assertTxt = res))
@@ -67,7 +67,7 @@ class _TestAppState extends State<TestApp> {
     return [
       Text('ASSERT TEST'),
       IconButton(key: Key('assertBtn'), icon: icon, onPressed: handler),
-      Text(assertTxt, key: Key('assertTxt')),
+      Text(assertTxt, key: Key('assertTxt'), textAlign: TextAlign.center),
       Divider()
     ];
   }
@@ -81,7 +81,7 @@ class _TestAppState extends State<TestApp> {
       }
 
       tputEnabled = false;
-      setState(() => tputTxt = '');
+      setState(() => tputTxt = 'throughput test running...');
 
       IntegrationTests.tputTest()
           .then((res) => setState(() => tputTxt = res))
@@ -92,7 +92,7 @@ class _TestAppState extends State<TestApp> {
     return [
       Text('THROUGHPUT TEST'),
       IconButton(key: Key('tputBtn'), icon: icon, onPressed: handler),
-      Text(tputTxt, key: Key('tputTxt')),
+      Text(tputTxt, key: Key('tputTxt'), textAlign: TextAlign.center),
     ];
   }
 }
