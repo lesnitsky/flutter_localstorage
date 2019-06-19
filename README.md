@@ -47,6 +47,14 @@ class SomeWidget extends StatelessWidget {
 }
 ```
 
+## Integration tests
+
+```sh
+cd ~/flutter_localstorage/test
+flutter packages get
+flutter drive --target=lib/main.dart
+```
+
 ## License
 
 MIT
