@@ -30,7 +30,7 @@ void main() {
           break;
         }
 
-        if (txt != '') {
+        if (txt != '' && !txt.contains('running')) {
           success = false;
           break;
         }
@@ -48,7 +48,7 @@ void main() {
 
       final txtFinder = find.byValueKey('tputTxt');
 
-      while (true) {
+      for (;;) {
         final txt = await driver.getText(txtFinder);
 
         if (txt.contains('success')) {
@@ -56,7 +56,7 @@ void main() {
           break;
         }
 
-        if (txt != '') {
+        if (txt != '' && !txt.contains('running')) {
           success = false;
           break;
         }
@@ -65,6 +65,6 @@ void main() {
       }
 
       expect(success, true);
-    }, timeout: Timeout(Duration(minutes: 10)));
-  }, timeout: Timeout(Duration(minutes: 10)));
+    }, timeout: Timeout(Duration(minutes: 1)));
+  }, timeout: Timeout(Duration(minutes: 1)));
 }
