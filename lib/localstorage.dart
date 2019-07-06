@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart' show ValueNotifier;
 import 'package:path_provider/path_provider.dart';
 
 /// Creates instance of a local storage. Key is used as a filename
@@ -13,8 +12,11 @@ class LocalStorage {
   String _path;
   Map<String, dynamic> _data;
 
-  /// [ValueNotifier] which notifies about errors during storage initialization
-  ValueNotifier<Error> onError;
+  /// [Stream] which notifies about errors during storage initialization
+  Stream<Error> get onError => _streamController.stream;
+
+  StreamController<Error> _streamController;
+  Sink<Error> get _errorSink => _streamController.sink;
 
   /// A future indicating if localstorage intance is ready for read/write operations
   Future<bool> ready;
@@ -39,7 +41,7 @@ class LocalStorage {
     _filename = key;
     _data = new Map();
     _path = path;
-    onError = new ValueNotifier(null);
+    _streamController = StreamController<Error>();
 
     ready = new Future<bool>(() async {
       await this._init();
@@ -70,7 +72,8 @@ class LocalStorage {
         try {
           _data = json.decode(content);
         } catch (err) {
-          onError.value = err;
+          _errorSink.add(err);
+          _streamController.close();
           _data = {};
           _file.writeAsStringSync('{}');
         }
@@ -79,7 +82,8 @@ class LocalStorage {
         return _init();
       }
     } on Error catch (err) {
-      onError.value = err;
+      _errorSink.add(err);
+      _streamController.close();
     }
   }
 
