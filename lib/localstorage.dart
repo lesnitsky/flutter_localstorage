@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart'
+    if (dart.library.mirrors) 'path_provider_mock.dart';
 
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
