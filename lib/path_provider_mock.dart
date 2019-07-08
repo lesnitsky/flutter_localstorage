@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-Future<Directory> getTemporaryDirectory() => Future.value(Directory(''));
+final configDirectory = Directory('${Platform.environment['HOME']}/.config');
+
+Future<Directory> getTemporaryDirectory() => Future.value(configDirectory);
 Future<Directory> getApplicationSupportDirectory() =>
-    Future.value(Directory(''));
+    Future.value(configDirectory);
 Future<Directory> getApplicationDocumentsDirectory() =>
-    Future.value(Directory(''));
-Future<Directory> getExternalStorageDirectory() => Future.value(Directory(''));
+    Future.value(configDirectory);
+Future<Directory> getExternalStorageDirectory() =>
+    Future.value(configDirectory);

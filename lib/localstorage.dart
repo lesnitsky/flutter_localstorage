@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+// See https://github.com/dart-lang/sdk/issues/36460
 import 'path_provider_mock.dart'
     if (dart.library.ui) 'package:path_provider/path_provider.dart';
-// See https://github.com/dart-lang/sdk/issues/36460
 
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
@@ -51,18 +51,9 @@ class LocalStorage {
     });
   }
 
-  Future<Directory> _getDocumentDir() async {
-    if (Platform.isMacOS || Platform.isLinux) {
-      return Directory('${Platform.environment['HOME']}/.config');
-    } else if (Platform.isWindows) {
-      return Directory('${Platform.environment['UserProfile']}\\.config');
-    }
-    return await getApplicationDocumentsDirectory();
-  }
-
   Future<void> _init() async {
     try {
-      final path = _path ?? (await _getDocumentDir()).path;
+      final path = _path ?? (await getApplicationDocumentsDirectory()).path;
 
       _file = File('$path/$_filename.json');
 
