@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-// See https://github.com/dart-lang/sdk/issues/36460
-import 'path_provider_mock.dart'
-    if (dart.library.ui) 'package:path_provider/path_provider.dart';
+import 'path_provider.dart' show getApplicationDocumentsDirectory;
 
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
