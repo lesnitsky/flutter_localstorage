@@ -1,0 +1,22 @@
+name: test_app
+version: 1.0.0
+
+environment:
+  flutter: ^1.5.0
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  localstorage:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_driver:
+    sdk: flutter
+  test: any
+
+flutter:
+  uses-material-design: true

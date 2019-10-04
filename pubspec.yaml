@@ -1,6 +1,6 @@
 name: localstorage
 description: Simple json file-based storage fo flutter. Alternative to react-native AsyncStorage
-version: 1.3.0
+version: 2.0.0
 author: Andrei Lesnitsky <andrei.lesnitsky@gmail.com>
 homepage: https://github.com/lesnitsky/flutter_localstorage
 
@@ -10,9 +10,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  path_provider: ^1.0.0
   cooky: ^1.0.1
+  path_provider: ^1.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_driver:
+    sdk: flutter
+  test: any
