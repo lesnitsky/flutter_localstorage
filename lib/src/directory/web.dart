@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:cooky/cooky.dart' as cookie;
+import '../cooky.dart' as cookie;
 
 class DirUtils {
   final String path, fileName;

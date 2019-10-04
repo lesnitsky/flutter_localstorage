@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cooky: ^1.0.1
   path_provider: ^1.1.0
 
 dev_dependencies:
