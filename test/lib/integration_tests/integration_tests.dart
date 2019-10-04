@@ -3,6 +3,7 @@
 /// @nodoc
 library integration_tests;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
