@@ -54,7 +54,9 @@ class LocalStorage {
 
   /// Saves item by key to a storage. Value should be json encodable (`json.encode()` is called under the hood).
   Future<void> setItem(String key, value) async {
-    _storage.update(key, (old) => value, ifAbsent: () => value);
+    // _storage.update(key, (old) => value, ifAbsent: () => value);
+    _storage.remove(key);
+    _storage.putIfAbsent(key, () => value);
     return;
   }
 

@@ -132,20 +132,28 @@ class _MyHomePageState extends State<HomePage> {
                       itemExtent: 50.0,
                     ),
                   ),
-                  TextField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      labelText: 'What to do?',
+                  ListTile(
+                    title: TextField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        labelText: 'What to do?',
+                      ),
+                      onEditingComplete: _save,
                     ),
-                    onEditingComplete: () {
-                      _addItem(controller.value.text);
-                      controller.clear();
-                    },
+                    trailing: IconButton(
+                      icon: Icon(Icons.save),
+                      onPressed: _save,
+                    ),
                   ),
                 ],
               );
             },
           )),
     );
+  }
+
+  void _save() {
+    _addItem(controller.value.text);
+    controller.clear();
   }
 }
