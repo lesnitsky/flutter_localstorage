@@ -83,9 +83,8 @@ class DirUtils implements LocalStorageImpl {
       orElse: () => null,
     );
     if (data != null) {
-      final _result =
-          json.decode(json.encode(data.value)) as Map<String, dynamic>;
-      _data = _result;
+      _data = json.decode(data.value) as Map<String, dynamic>;
+      storage.add(_data);
     } else {
       await _writeToStorage({});
     }
