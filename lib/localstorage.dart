@@ -7,10 +7,12 @@ import 'src/directory/directory.dart';
 
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
+  Stream<Map<String, dynamic>> get stream => _dir.stream;
+  Map<String, dynamic> _initialData;
+
   static final Map<String, LocalStorage> _cache = new Map();
 
   DirUtils _dir;
-  Map<String, dynamic> _data;
 
   /// [ValueNotifier] which notifies about errors during storage initialization
   ValueNotifier<Error> onError;
@@ -23,20 +25,26 @@ class LocalStorage {
 
   /// [key] is used as a filename
   /// Optional [path] is used as a directory. Defaults to application document directory
-  factory LocalStorage(String key, [String path]) {
+  factory LocalStorage(String key,
+      [String path, Map<String, dynamic> initialData]) {
     if (_cache.containsKey(key)) {
       return _cache[key];
     } else {
-      final instance = LocalStorage._internal(key, path);
+      final instance = LocalStorage._internal(key, path, initialData);
       _cache[key] = instance;
 
       return instance;
     }
   }
 
-  LocalStorage._internal(String key, [String path]) {
-    _data = new Map();
+  void dispose() {
+    _dir?.dispose();
+  }
+
+  LocalStorage._internal(String key,
+      [String path, Map<String, dynamic> initialData]) {
     _dir = DirUtils(key, path);
+    _initialData = initialData;
     onError = new ValueNotifier(null);
 
     ready = new Future<bool>(() async {
@@ -47,22 +55,7 @@ class LocalStorage {
 
   Future<void> _init() async {
     try {
-      var exists = await _dir.fileExists();
-
-      if (exists) {
-        final content = await _dir.readFile();
-
-        try {
-          _data = json.decode(content);
-        } catch (err) {
-          onError.value = err;
-          _data = {};
-          await _dir.writeFile('{}');
-        }
-      } else {
-        await _dir.writeFile('{}');
-        return _init();
-      }
+      await _dir.init(_initialData);
     } on Error catch (err) {
       onError.value = err;
     }
@@ -70,7 +63,7 @@ class LocalStorage {
 
   /// Returns a value from storage by key
   dynamic getItem(String key) {
-    return _data[key];
+    return _dir.getItem(key);
   }
 
   /// Saves item by [key] to a storage. Value should be json encodable (`json.encode()` is called under the hood).
@@ -82,23 +75,22 @@ class LocalStorage {
     value, [
     Object toEncodable(Object nonEncodable),
   ]) async {
-    _data[key] = json.decode(
-      json.encode(toEncodable != null ? toEncodable(value) : value),
-    );
+    final _encoded =
+        json.encode(toEncodable != null ? toEncodable(value) : value);
+    await _dir.setItem(key, json.decode(_encoded));
 
     return _attemptFlush();
   }
 
   /// Removes item from storage by key
   Future<void> deleteItem(String key) async {
-    _data.remove(key);
-
+    await _dir.remove(key);
     return _attemptFlush();
   }
 
   /// Removes all items from localstorage
-  Future<void> clear() {
-    _data.clear();
+  Future<void> clear() async {
+    await _dir.clear();
     return _attemptFlush();
   }
 
@@ -114,9 +106,8 @@ class LocalStorage {
   }
 
   Future<void> _flush() async {
-    final serialized = json.encode(_data);
     try {
-      await _dir.writeFile(serialized);
+      await _dir.flush();
     } catch (e) {
       rethrow;
     }
