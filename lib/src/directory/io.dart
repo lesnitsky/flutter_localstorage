@@ -10,11 +10,6 @@ class DirUtils {
 
   DirUtils(this.fileName, [this.path]);
 
-  Future<String> getPath() async {
-    final dir = await _getDocumentDir();
-    return dir.path;
-  }
-
   Future writeFile(Map<String, dynamic> data) async {
     try {
       File _file = await _getFile();
@@ -47,8 +42,9 @@ class DirUtils {
   }
 
   Future<File> _getFile() async {
-    final path = (await getPath());
-    final _file = File('$path/$fileName.json');
+    final dir = await _getDocumentDir();
+    final _path = path ?? dir.path;
+    final _file = File('$_path/$fileName.json');
     return _file;
   }
 

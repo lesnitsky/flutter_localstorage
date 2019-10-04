@@ -1,23 +1,22 @@
 import 'dart:async';
+import 'package:cooky/cooky.dart' as cookie;
 
 class DirUtils {
   final String path, fileName;
 
   DirUtils(this.fileName, [this.path]);
 
-  Future<String> getPath() async {
-    throw 'Platform Not Supported';
+  Future writeFile(String data) async {
+    cookie.set(fileName, data, path: path);
+    return;
   }
 
-  Future writeFile(String data) {
-    throw 'Platform Not Supported';
+  Future<String> readFile() async {
+    return cookie.get(fileName);
   }
 
-  Future<String> readFile() {
-    throw 'Platform Not Supported';
-  }
-
-  Future<bool> fileExists() {
-    throw 'Platform Not Supported';
+  Future<bool> fileExists() async {
+    final data = cookie.get(fileName);
+    return data != null;
   }
 }

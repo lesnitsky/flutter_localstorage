@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   path_provider: ^1.0.0
-  universal_html: ^1.1.6
+  cooky: ^1.0.1
 
 dev_dependencies:
   flutter_test:
