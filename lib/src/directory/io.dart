@@ -52,7 +52,15 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future init([Map<String, dynamic> initialData]) => _readFile(initialData);
+  Future init([Map<String, dynamic> initialData]) async {
+    _data = initialData ?? {};
+    File _file = await _getFile();
+    if (_file.existsSync()) {
+      return _readFile();
+    } else {
+      return _writeFile(_data);
+    }
+  }
 
   @override
   Future remove(String key) async {
@@ -76,7 +84,7 @@ class DirUtils implements LocalStorageImpl {
     }
   }
 
-  Future<void> _readFile(Map<String, dynamic> initialData) async {
+  Future<void> _readFile() async {
     File _file = await _getFile();
     try {
       final content = _file.readAsStringSync();
@@ -84,11 +92,6 @@ class DirUtils implements LocalStorageImpl {
         _data = json.decode(content) as Map<String, dynamic>;
         storage.add(_data);
       } catch (err) {
-        if (initialData != null) {
-          _writeFile(initialData);
-        } else {
-          _writeFile({});
-        }
         throw err;
       }
     } catch (e) {

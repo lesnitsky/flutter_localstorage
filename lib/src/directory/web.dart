@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:html' as html;
 
 import '../impl.dart';
@@ -7,59 +8,86 @@ class DirUtils implements LocalStorageImpl {
   final String path, fileName;
 
   DirUtils(this.fileName, [this.path]);
-  html.Storage get _storage => html.window.localStorage;
+  html.Storage get localStorage => html.window.localStorage;
+  Map<String, dynamic> _data = Map();
 
   StreamController<Map<String, dynamic>> storage =
       StreamController<Map<String, dynamic>>();
 
   @override
   Future clear() {
-    // TODO: implement clear
+    localStorage.clear();
+    storage.add(null);
     return null;
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    storage.close();
   }
 
   @override
-  Future<bool> exists() {
-    // TODO: implement exists
-    return null;
+  Future<bool> exists() async {
+    return localStorage != null && localStorage.containsKey(fileName);
   }
 
   @override
   Future flush() {
-    // TODO: implement flush
-    return null;
+    return _writeToStorage(_data);
   }
 
   @override
   dynamic getItem(String key) {
-    // TODO: implement getItem
-    return null;
+    return _data[key];
   }
 
   @override
-  Future init([Map<String, dynamic> initialData]) {
-    // TODO: implement init
+  Future init([Map<String, dynamic> initialData]) async {
+    _data = initialData ?? {};
+    if (await exists()) {
+      await _readFromStorage();
+    } else {
+      await _writeToStorage(_data);
+    }
     return null;
   }
 
   @override
   Future remove(String key) {
-    // TODO: implement remove
-    return null;
+    _data.remove(key);
+    return _writeToStorage(_data);
   }
 
   @override
   Future setItem(String key, value) {
-    // TODO: implement setItem
-    return null;
+    _data[key] = value;
+    return _writeToStorage(_data);
   }
 
   @override
-  // TODO: implement stream
   Stream<Map<String, dynamic>> get stream => storage.stream;
+
+  Future _writeToStorage(Map<String, dynamic> data) async {
+    _data = data;
+    storage.add(data);
+    localStorage.update(
+      fileName,
+      (val) => json.encode(_data),
+      ifAbsent: () => json.encode(_data),
+    );
+  }
+
+  Future _readFromStorage() async {
+    final data = localStorage.entries.firstWhere(
+      (i) => i.key == fileName,
+      orElse: () => null,
+    );
+    if (data != null) {
+      final _result =
+          json.decode(json.encode(data.value)) as Map<String, dynamic>;
+      _data = _result;
+    } else {
+      await _writeToStorage({});
+    }
+  }
 }
