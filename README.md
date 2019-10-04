@@ -2,6 +2,9 @@
 
 Simple json file-based storage for flutter
 
+[![GitHub stars](https://img.shields.io/github/stars/lesnitsky/flutter_localstorage.svg?style=social)](https://github.com/lesnitsky/flutter_localstorage)
+[![Twitter Follow](https://img.shields.io/twitter/follow/lesnitsky_a.svg?label=Follow%20me&style=social)](https://twitter.com/lesnitsky_a)
+
 ## Installation
 
 Add dependency to `pubspec.yaml`
@@ -9,7 +12,7 @@ Add dependency to `pubspec.yaml`
 ```yaml
 dependencies:
   ...
-  localstorage: ^1.2.0
+  localstorage: ^2.0.0
 ```
 
 Run in your terminal
@@ -42,6 +45,17 @@ class SomeWidget extends StatelessWidget {
 }
 ```
 
+## Integration tests
+
+```sh
+cd ~/flutter_localstorage/test
+flutter packages get
+flutter drive --target=lib/main.dart
+```
+
 ## License
 
 MIT
+
+[![GitHub stars](https://img.shields.io/github/stars/lesnitsky/flutter_localstorage.svg?style=social)](https://github.com/lesnitsky/flutter_localstorage)
+[![Twitter Follow](https://img.shields.io/twitter/follow/lesnitsky_a.svg?label=Follow%20me&style=social)](https://twitter.com/lesnitsky_a)

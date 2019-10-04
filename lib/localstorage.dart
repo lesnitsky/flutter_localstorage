@@ -16,14 +16,14 @@ class LocalStorage {
   /// [ValueNotifier] which notifies about errors during storage initialization
   ValueNotifier<Error> onError;
 
-  /// A future indicating if localstorage intance is ready for read/write operations
+  /// A future indicating if localstorage instance is ready for read/write operations
   Future<bool> ready;
 
   /// Prevents the file from being accessed more than once
   Future<void> _lock;
 
   /// [key] is used as a filename
-  /// Optional [path] is used as a directory. Defaluts to application document directory
+  /// Optional [path] is used as a directory. Defaults to application document directory
   factory LocalStorage(String key, [String path]) {
     if (_cache.containsKey(key)) {
       return _cache[key];
@@ -88,9 +88,18 @@ class LocalStorage {
     return _data[key];
   }
 
-  /// Saves item by key to a storage. Value should be json encodable (`json.encode()` is called under the hood).
-  Future<void> setItem(String key, value) async {
-    _data[key] = value;
+  /// Saves item by [key] to a storage. Value should be json encodable (`json.encode()` is called under the hood).
+  /// After item was set to storage, consecutive [getItem] will return `json` representation of this item
+  /// if [toEncodable] is provided, it is called before setting item to storage
+  /// otherwise `value.toJson()` is called
+  Future<void> setItem(
+    String key,
+    value, [
+    Object toEncodable(Object nonEncodable),
+  ]) async {
+    _data[key] = json.decode(
+      json.encode(toEncodable != null ? toEncodable(value) : value),
+    );
 
     return _attemptFlush();
   }
@@ -122,6 +131,7 @@ class LocalStorage {
   Future<void> _flush() async {
     final serialized = json.encode(_data);
     try {
+      await ready;
       await _file.writeAsString(serialized);
     } catch (e) {
       rethrow;
