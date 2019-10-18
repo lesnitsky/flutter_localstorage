@@ -1,3 +1,7 @@
+## 2.0.1
+
+- update dependencies
+
 ## 2.0.0
 
 - fix inconsitent return format of `getItem`. It now always returns `JsonEncodable` representation of an item

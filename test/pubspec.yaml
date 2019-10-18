@@ -2,8 +2,8 @@ name: test_app
 version: 1.0.0
 
 environment:
-  flutter: ^1.5.0
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  flutter: ">=1.2.1 <2.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
