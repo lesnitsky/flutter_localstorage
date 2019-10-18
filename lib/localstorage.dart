@@ -72,10 +72,10 @@ class LocalStorage {
         } catch (err) {
           onError.value = err;
           _data = {};
-          _file.writeAsStringSync('{}');
+          _file.writeAsStringSync('{}', flush: true);
         }
       } else {
-        _file.writeAsStringSync('{}');
+        _file.writeAsStringSync('{}', flush: true);
         return _init();
       }
     } on Error catch (err) {
@@ -132,7 +132,7 @@ class LocalStorage {
     final serialized = json.encode(_data);
     try {
       await ready;
-      await _file.writeAsString(serialized);
+      await _file.writeAsString(serialized, flush: true);
     } catch (e) {
       rethrow;
     }

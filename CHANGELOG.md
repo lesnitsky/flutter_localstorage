@@ -1,6 +1,7 @@
 ## 2.0.1
 
 - update dependencies
+- make sure all data gets properly flushed to filesystem on `_init` and `_flush`
 
 ## 2.0.0
 
