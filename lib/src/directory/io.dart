@@ -23,7 +23,7 @@ class DirUtils implements LocalStorageImpl {
   @override
   Future clear() async {
     File _file = await _getFile();
-    _data = Map();
+    _data.clear();
     storage.add(null);
     return _file.deleteSync();
   }

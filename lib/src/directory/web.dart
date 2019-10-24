@@ -18,6 +18,7 @@ class DirUtils implements LocalStorageImpl {
   Future clear() {
     localStorage.clear();
     storage.add(null);
+    _data.clear();
     return null;
   }
 
