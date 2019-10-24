@@ -1,6 +1,6 @@
 name: localstorage
 description: Simple json file-based storage fo flutter. Alternative to react-native AsyncStorage
-version: 2.0.0
+version: 3.0.0+1
 author: Andrei Lesnitsky <andrei.lesnitsky@gmail.com>
 homepage: https://github.com/lesnitsky/flutter_localstorage
 
@@ -11,10 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   path_provider: ^1.1.0
-  path_provider_fde:
-    git:
-      url: https://github.com/google/flutter-desktop-embedding
-      path: plugins/flutter_plugins/path_provider_fde
 
 dev_dependencies:
   flutter_test:

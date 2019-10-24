@@ -87,7 +87,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.0"
+    version: "3.0.0+1"
   matcher:
     dependency: transitive
     description:
@@ -117,12 +117,12 @@ packages:
     source: hosted
     version: "1.4.0"
   path_provider_fde:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "plugins/flutter_plugins/path_provider_fde"
       ref: HEAD
       resolved-ref: "3e21f6bcb385da417569a8145eedddef6225687d"
-      url: "https://github.com/google/flutter-desktop-embedding"
+      url: "https://github.com/google/flutter-desktop-embedding/"
     source: git
     version: "0.0.1"
   pedantic:
