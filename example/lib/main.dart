@@ -1,8 +1,17 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:localstorage/localstorage.dart';
 
-void main() => runApp(new MyApp());
+void main() {
+  if (!kIsWeb && Platform.isMacOS) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
+
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -80,6 +89,14 @@ class _MyHomePageState extends State<HomePage> {
     storage.setItem('todos', list.toJSONEncodable());
   }
 
+  _clearStorage() async {
+    await storage.clear();
+
+    setState(() {
+      list.items = storage.getItem('todos') ?? [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -102,11 +119,14 @@ class _MyHomePageState extends State<HomePage> {
                 var items = storage.getItem('todos');
 
                 if (items != null) {
-                  (items as List).forEach((item) {
-                    final todoItem =
-                        new TodoItem(title: item['title'], done: item['done']);
-                    list.items.add(todoItem);
-                  });
+                  list.items = List<TodoItem>.from(
+                    (items as List).map(
+                      (item) => TodoItem(
+                        title: item['title'],
+                        done: item['done'],
+                      ),
+                    ),
+                  );
                 }
 
                 initialized = true;
@@ -140,9 +160,20 @@ class _MyHomePageState extends State<HomePage> {
                       ),
                       onEditingComplete: _save,
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.save),
-                      onPressed: _save,
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.save),
+                          onPressed: _save,
+                          tooltip: 'Save',
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: _clearStorage,
+                          tooltip: 'Clear storage',
+                        )
+                      ],
                     ),
                   ),
                 ],
