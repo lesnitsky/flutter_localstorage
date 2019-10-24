@@ -45,6 +45,19 @@ class SomeWidget extends StatelessWidget {
 }
 ```
 
+## Desktop support
+
+In order to be able to use this package on desktop, add this to your `pubspec.yaml`
+
+```pubspec.yaml
+dependencies:
+  localstorage: ^3.0.0
+  path_provider_fde:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding/
+      path: plugins/flutter_plugins/path_provider_fde
+```
+
 ## Integration tests
 
 ```sh
