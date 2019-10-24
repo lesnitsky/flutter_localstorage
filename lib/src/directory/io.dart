@@ -21,7 +21,7 @@ class DirUtils implements LocalStorageImpl {
       StreamController<Map<String, dynamic>>();
 
   @override
-  Future clear() async {
+  Future<void> clear() async {
     File _file = await _getFile();
     _data.clear();
     storage.add(null);
@@ -40,10 +40,10 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future flush() async {
+  Future<void> flush() async {
     final serialized = json.encode(_data);
     File _file = await _getFile();
-    _file.writeAsStringSync(serialized, flush: true);
+    await _file.writeAsString(serialized, flush: true);
     return;
   }
 
@@ -53,7 +53,7 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future init([Map<String, dynamic> initialData]) async {
+  Future<void> init([Map<String, dynamic> initialData]) async {
     _data = initialData ?? {};
     File _file = await _getFile();
     if (_file.existsSync()) {
@@ -64,40 +64,29 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future remove(String key) async {
+  Future<void> remove(String key) async {
     await _writeFile(_data);
   }
 
   @override
-  Future setItem(String key, dynamic value) async {
+  Future<void> setItem(String key, dynamic value) async {
     _data[key] = value;
     await _writeFile(_data);
   }
 
-  Future _writeFile(Map<String, dynamic> data) async {
-    try {
-      _data = data;
-      storage.add(data);
-      File _file = await _getFile();
-      _file.writeAsStringSync(json.encode(data), flush: true);
-    } catch (e) {
-      throw e;
-    }
+  Future<void> _writeFile(Map<String, dynamic> data) async {
+    _data = data;
+    storage.add(data);
+    File _file = await _getFile();
+    _file.writeAsString(json.encode(data), flush: true);
   }
 
   Future<void> _readFile() async {
     File _file = await _getFile();
-    try {
-      final content = _file.readAsStringSync();
-      try {
-        _data = json.decode(content) as Map<String, dynamic>;
-        storage.add(_data);
-      } catch (err) {
-        throw err;
-      }
-    } catch (e) {
-      throw e;
-    }
+
+    final content = await _file.readAsString();
+    _data = json.decode(content) as Map<String, dynamic>;
+    storage.add(_data);
   }
 
   Future<File> _getFile() async {

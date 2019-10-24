@@ -15,11 +15,10 @@ class DirUtils implements LocalStorageImpl {
       StreamController<Map<String, dynamic>>();
 
   @override
-  Future clear() {
+  Future<void> clear() async {
     localStorage.clear();
     storage.add(null);
     _data.clear();
-    return null;
   }
 
   @override
@@ -33,7 +32,7 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future flush() {
+  Future<void> flush() {
     return _writeToStorage(_data);
   }
 
@@ -43,7 +42,7 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future init([Map<String, dynamic> initialData]) async {
+  Future<void> init([Map<String, dynamic> initialData]) async {
     _data = initialData ?? {};
     if (await exists()) {
       await _readFromStorage();
@@ -54,13 +53,13 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future remove(String key) {
+  Future<void> remove(String key) {
     _data.remove(key);
     return _writeToStorage(_data);
   }
 
   @override
-  Future setItem(String key, value) {
+  Future<void> setItem(String key, value) {
     _data[key] = value;
     return _writeToStorage(_data);
   }
@@ -68,7 +67,7 @@ class DirUtils implements LocalStorageImpl {
   @override
   Stream<Map<String, dynamic>> get stream => storage.stream;
 
-  Future _writeToStorage(Map<String, dynamic> data) async {
+  Future<void> _writeToStorage(Map<String, dynamic> data) async {
     _data = data;
     storage.add(data);
     localStorage.update(
@@ -78,7 +77,7 @@ class DirUtils implements LocalStorageImpl {
     );
   }
 
-  Future _readFromStorage() async {
+  Future<void> _readFromStorage() async {
     final data = localStorage.entries.firstWhere(
       (i) => i.key == fileName,
       orElse: () => null,

@@ -9,17 +9,17 @@ abstract class LocalStorageImpl {
 
   void dispose();
 
-  Future init([Map<String, dynamic> initialData]);
+  Future<void> init([Map<String, dynamic> initialData]);
 
-  Future setItem(String key, dynamic value);
+  Future<void> setItem(String key, dynamic value);
 
   dynamic getItem(String key);
 
   Future<bool> exists();
 
-  Future clear();
+  Future<void> clear();
 
-  Future remove(String key);
+  Future<void> remove(String key);
 
-  Future flush();
+  Future<void> flush();
 }

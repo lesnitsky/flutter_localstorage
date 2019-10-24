@@ -13,7 +13,7 @@ class DirUtils implements LocalStorageImpl {
       StreamController<Map<String, dynamic>>();
 
   @override
-  Future clear() {
+  Future<void> clear() {
     throw PlatformNotSupportedError();
   }
 
@@ -28,7 +28,7 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future flush() {
+  Future<void> flush() {
     throw PlatformNotSupportedError();
   }
 
@@ -38,17 +38,17 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future init([Map<String, dynamic> initialData]) {
+  Future<void> init([Map<String, dynamic> initialData]) {
     throw PlatformNotSupportedError();
   }
 
   @override
-  Future remove(String key) {
+  Future<void> remove(String key) {
     throw PlatformNotSupportedError();
   }
 
   @override
-  Future setItem(String key, value) {
+  Future<void> setItem(String key, value) {
     throw PlatformNotSupportedError();
   }
 
