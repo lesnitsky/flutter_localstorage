@@ -43,7 +43,7 @@ class DirUtils implements LocalStorageImpl {
   Future flush() async {
     final serialized = json.encode(_data);
     File _file = await _getFile();
-    _file.writeAsStringSync(serialized);
+    _file.writeAsStringSync(serialized, flush: true);
     return;
   }
 
@@ -79,7 +79,7 @@ class DirUtils implements LocalStorageImpl {
       _data = data;
       storage.add(data);
       File _file = await _getFile();
-      _file.writeAsStringSync(json.encode(data));
+      _file.writeAsStringSync(json.encode(data), flush: true);
     } catch (e) {
       throw e;
     }
