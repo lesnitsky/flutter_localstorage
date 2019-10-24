@@ -1,17 +1,18 @@
-import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart' show ValueNotifier;
-import 'package:path_provider/path_provider.dart';
+
+import 'src/directory/directory.dart';
 
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
+  Stream<Map<String, dynamic>> get stream => _dir.stream;
+  Map<String, dynamic> _initialData;
+
   static final Map<String, LocalStorage> _cache = new Map();
 
-  String _filename;
-  File _file;
-  String _path;
-  Map<String, dynamic> _data;
+  DirUtils _dir;
 
   /// [ValueNotifier] which notifies about errors during storage initialization
   ValueNotifier<Error> onError;
@@ -24,21 +25,26 @@ class LocalStorage {
 
   /// [key] is used as a filename
   /// Optional [path] is used as a directory. Defaults to application document directory
-  factory LocalStorage(String key, [String path]) {
+  factory LocalStorage(String key,
+      [String path, Map<String, dynamic> initialData]) {
     if (_cache.containsKey(key)) {
       return _cache[key];
     } else {
-      final instance = LocalStorage._internal(key, path);
+      final instance = LocalStorage._internal(key, path, initialData);
       _cache[key] = instance;
 
       return instance;
     }
   }
 
-  LocalStorage._internal(String key, [String path]) {
-    _filename = key;
-    _data = new Map();
-    _path = path;
+  void dispose() {
+    _dir?.dispose();
+  }
+
+  LocalStorage._internal(String key,
+      [String path, Map<String, dynamic> initialData]) {
+    _dir = DirUtils(key, path);
+    _initialData = initialData;
     onError = new ValueNotifier(null);
 
     ready = new Future<bool>(() async {
@@ -47,37 +53,9 @@ class LocalStorage {
     });
   }
 
-  Future<Directory> _getDocumentDir() async {
-    if (Platform.isMacOS || Platform.isLinux) {
-      return Directory('${Platform.environment['HOME']}/.config');
-    } else if (Platform.isWindows) {
-      return Directory('${Platform.environment['UserProfile']}\\.config');
-    }
-    return await getApplicationDocumentsDirectory();
-  }
-
   Future<void> _init() async {
     try {
-      final path = _path ?? (await _getDocumentDir()).path;
-
-      _file = File('$path/$_filename.json');
-
-      var exists = _file.existsSync();
-
-      if (exists) {
-        final content = await _file.readAsString();
-
-        try {
-          _data = json.decode(content);
-        } catch (err) {
-          onError.value = err;
-          _data = {};
-          _file.writeAsStringSync('{}');
-        }
-      } else {
-        _file.writeAsStringSync('{}');
-        return _init();
-      }
+      await _dir.init(_initialData);
     } on Error catch (err) {
       onError.value = err;
     }
@@ -85,7 +63,7 @@ class LocalStorage {
 
   /// Returns a value from storage by key
   dynamic getItem(String key) {
-    return _data[key];
+    return _dir.getItem(key);
   }
 
   /// Saves item by [key] to a storage. Value should be json encodable (`json.encode()` is called under the hood).
@@ -97,23 +75,22 @@ class LocalStorage {
     value, [
     Object toEncodable(Object nonEncodable),
   ]) async {
-    _data[key] = json.decode(
-      json.encode(toEncodable != null ? toEncodable(value) : value),
-    );
+    final _encoded =
+        json.encode(toEncodable != null ? toEncodable(value) : value);
+    await _dir.setItem(key, json.decode(_encoded));
 
     return _attemptFlush();
   }
 
   /// Removes item from storage by key
   Future<void> deleteItem(String key) async {
-    _data.remove(key);
-
+    await _dir.remove(key);
     return _attemptFlush();
   }
 
   /// Removes all items from localstorage
-  Future<void> clear() {
-    _data.clear();
+  Future<void> clear() async {
+    await _dir.clear();
     return _attemptFlush();
   }
 
@@ -129,10 +106,8 @@ class LocalStorage {
   }
 
   Future<void> _flush() async {
-    final serialized = json.encode(_data);
     try {
-      await ready;
-      await _file.writeAsString(serialized);
+      await _dir.flush();
     } catch (e) {
       rethrow;
     }
