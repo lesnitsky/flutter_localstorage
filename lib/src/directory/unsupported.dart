@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:localstorage/src/errors.dart';
+
 import '../impl.dart';
 
 class DirUtils implements LocalStorageImpl {
@@ -12,42 +14,42 @@ class DirUtils implements LocalStorageImpl {
 
   @override
   Future clear() {
-    throw 'Platform Not Supported';
+    throw PlatformNotSupportedError();
   }
 
   @override
   void dispose() {
-    throw 'Platform Not Supported';
+    throw PlatformNotSupportedError();
   }
 
   @override
   Future<bool> exists() {
-    throw 'Platform Not Supported';
+    throw PlatformNotSupportedError();
   }
 
   @override
   Future flush() {
-    throw 'Platform Not Supported';
+    throw PlatformNotSupportedError();
   }
 
   @override
   dynamic getItem(String key) {
-    throw 'Platform Not Supported';
+    throw PlatformNotSupportedError();
   }
 
   @override
   Future init([Map<String, dynamic> initialData]) {
-    throw 'Platform Not Supported';
+    throw PlatformNotSupportedError();
   }
 
   @override
   Future remove(String key) {
-    throw 'Platform Not Supported';
+    throw PlatformNotSupportedError();
   }
 
   @override
   Future setItem(String key, value) {
-    throw 'Platform Not Supported';
+    throw PlatformNotSupportedError();
   }
 
   @override

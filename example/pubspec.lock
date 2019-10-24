@@ -115,7 +115,16 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.4.0"
+  path_provider_fde:
+    dependency: transitive
+    description:
+      path: "plugins/flutter_plugins/path_provider_fde"
+      ref: HEAD
+      resolved-ref: "3e21f6bcb385da417569a8145eedddef6225687d"
+      url: "https://github.com/google/flutter-desktop-embedding"
+    source: git
+    version: "0.0.1"
   pedantic:
     dependency: transitive
     description:
@@ -130,6 +139,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
   quiver:
     dependency: transitive
     description:

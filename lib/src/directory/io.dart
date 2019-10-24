@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:localstorage/src/errors.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../impl.dart';
@@ -107,11 +108,10 @@ class DirUtils implements LocalStorageImpl {
   }
 
   Future<Directory> _getDocumentDir() async {
-    if (Platform.isMacOS || Platform.isLinux) {
-      return Directory('${Platform.environment['HOME']}/.config');
-    } else if (Platform.isWindows) {
-      return Directory('${Platform.environment['UserProfile']}\\.config');
+    try {
+      return await getApplicationDocumentsDirectory();
+    } catch (err) {
+      throw PlatformNotSupportedError();
     }
-    return await getApplicationDocumentsDirectory();
   }
 }
