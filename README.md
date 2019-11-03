@@ -58,6 +58,21 @@ dependencies:
       path: plugins/flutter_plugins/path_provider_fde
 ```
 
+## V2 -> v3 migration
+
+V3 doesn't add `.json` extension to a storage filename, so you need to do this on your own if you need a "migration".
+If you were using v2 with code like below:
+
+```dart
+final storage = new LocalStorage('my_data');
+```
+
+v3 equivalent:
+
+```dart
+final storage = new LocalStorage('my_data.json')
+```
+
 ## Integration tests
 
 ```sh
