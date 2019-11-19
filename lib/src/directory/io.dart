@@ -65,6 +65,7 @@ class DirUtils implements LocalStorageImpl {
 
   @override
   Future<void> remove(String key) async {
+    _data.remove(key);
     await _writeFile(_data);
   }
 
