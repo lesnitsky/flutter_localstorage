@@ -1,3 +1,7 @@
+## 3.0.1+4
+
+- fix `remove(key)` (drops value from in-memory cache)
+
 ## 3.0.0
 
 ### Breaking changes (desktop only)
