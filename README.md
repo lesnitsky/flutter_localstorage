@@ -52,10 +52,10 @@ In order to be able to use this package on desktop, add this to your `pubspec.ya
 ```pubspec.yaml
 dependencies:
   localstorage: ^3.0.0
-  path_provider_fde:
+  url_launcher_fde:
     git:
       url: https://github.com/google/flutter-desktop-embedding/
-      path: plugins/flutter_plugins/path_provider_fde
+      path: plugins/flutter_plugins/url_launcher_fde
 ```
 
 ## V2 -> v3 migration
