@@ -45,19 +45,6 @@ class SomeWidget extends StatelessWidget {
 }
 ```
 
-## Desktop support
-
-In order to be able to use this package on desktop, add this to your `pubspec.yaml`
-
-```pubspec.yaml
-dependencies:
-  localstorage: ^3.0.0
-  path_provider_fde:
-    git:
-      url: https://github.com/google/flutter-desktop-embedding/
-      path: plugins/flutter_plugins/path_provider_fde
-```
-
 ## V2 -> v3 migration
 
 V3 doesn't add `.json` extension to a storage filename, so you need to do this on your own if you need a "migration".
