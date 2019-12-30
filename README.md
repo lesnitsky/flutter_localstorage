@@ -4,6 +4,7 @@ Simple json file-based storage for flutter
 
 [![GitHub stars](https://img.shields.io/github/stars/lesnitsky/flutter_localstorage.svg?style=social)](https://github.com/lesnitsky/flutter_localstorage)
 [![Twitter Follow](https://img.shields.io/twitter/follow/lesnitsky_a.svg?label=Follow%20me&style=social)](https://twitter.com/lesnitsky_a)
+[![lesnitsky.dev](https://lesnitsky.dev/icons/shield.svg)](https://lesnitsky.dev)
 
 ## Installation
 
@@ -74,3 +75,4 @@ MIT
 
 [![GitHub stars](https://img.shields.io/github/stars/lesnitsky/flutter_localstorage.svg?style=social)](https://github.com/lesnitsky/flutter_localstorage)
 [![Twitter Follow](https://img.shields.io/twitter/follow/lesnitsky_a.svg?label=Follow%20me&style=social)](https://twitter.com/lesnitsky_a)
+[![lesnitsky.dev](https://lesnitsky.dev/icons/shield.svg)](https://lesnitsky.dev)
