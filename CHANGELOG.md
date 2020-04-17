@@ -1,3 +1,7 @@
+## 3.0.2+5
+
+- fix `clear()` (drops data only from a storage instance, not all storages)
+
 ## 3.0.1+4
 
 - fix `remove(key)` (drops value from in-memory cache)

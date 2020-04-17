@@ -16,7 +16,7 @@ class DirUtils implements LocalStorageImpl {
 
   @override
   Future<void> clear() async {
-    localStorage.removeItem(fileName);
+    localStorage.remove(fileName);
     storage.add(null);
     _data.clear();
   }
