@@ -79,7 +79,7 @@ class DirUtils implements LocalStorageImpl {
     _data = data;
     storage.add(data);
     File _file = await _getFile();
-    _file.writeAsString(json.encode(data), flush: true);
+    _file.writeAsString(((data != null && data.isNotEmpty) ? json.encode(data) : data), flush: true);
   }
 
   Future<void> _readFile() async {
