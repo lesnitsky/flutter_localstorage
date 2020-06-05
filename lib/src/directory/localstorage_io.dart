@@ -8,9 +8,10 @@ import 'package:path_provider/path_provider.dart';
 import '../impl.dart';
 
 class DirUtils implements LocalStorageImpl {
-  DirUtils(this.fileName, [this.path]);
+  DirUtils(this.fileName, [this.path, this.debugMode]);
 
   final String path, fileName;
+  final bool debugMode;
 
   Map<String, dynamic> _data = Map();
 
@@ -53,13 +54,13 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future<void> init([Map<String, dynamic> initialData]) async {
+  Future<bool> init([Map<String, dynamic> initialData]) async {
     _data = initialData ?? {};
     File _file = await _getFile();
     if (_file.existsSync()) {
-      return _readFile();
+      return await _readFile();
     } else {
-      return _writeFile(_data);
+      return await _writeFile(_data);
     }
   }
 
@@ -75,19 +76,39 @@ class DirUtils implements LocalStorageImpl {
     await _writeFile(_data);
   }
 
-  Future<void> _writeFile(Map<String, dynamic> data) async {
-    _data = data;
-    storage.add(data);
-    File _file = await _getFile();
-    _file.writeAsString(((data != null && data.isNotEmpty) ? json.encode(data) : data), flush: true);
+  Future<bool> _writeFile(Map<String, dynamic> data) async {
+    var isValidWrite = true;
+    try {
+      _data = data;
+      storage.add(data);
+      File _file = await _getFile();
+      _file.writeAsString(
+          ((data != null && data.isNotEmpty) ? json.encode(data) : data),
+          flush: true);
+    } catch (err) {
+      isValidWrite = false;
+    }
+    return Future.value(isValidWrite);
   }
 
-  Future<void> _readFile() async {
+  Future<bool> _readFile() async {
+    var validRead = true;
     File _file = await _getFile();
-
-    final content = await _file.readAsString();
-    _data = json.decode(content) as Map<String, dynamic>;
+    try {
+      final content = await _file.readAsString();
+      _data = json.decode(content) as Map<String, dynamic>;
+    } catch (err) {
+      if (err is FormatException) {
+        if (debugMode) {
+          print('!!!!!~~~~~~recovery attempt)))))))((((((((~~~~~~~~');
+        }
+        _file.deleteSync();
+        init(_data);
+        validRead = false;
+      }
+    }
     storage.add(_data);
+    return Future.value(validRead);
   }
 
   Future<File> _getFile() async {
@@ -99,7 +120,11 @@ class DirUtils implements LocalStorageImpl {
 
   Future<Directory> _getDocumentDir() async {
     try {
-      return await getApplicationDocumentsDirectory();
+      Directory dir = await getApplicationDocumentsDirectory();
+      if (debugMode) {
+        print('!!!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${dir?.path ?? ''}');
+      }
+      return dir;
     } catch (err) {
       throw PlatformNotSupportedError();
     }
