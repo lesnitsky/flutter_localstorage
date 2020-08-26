@@ -5,6 +5,19 @@ import 'package:flutter/foundation.dart' show ValueNotifier, VoidCallback;
 
 import 'src/directory/directory.dart';
 
+export 'src/directory/localstorage_io.dart';
+
+mixin DirUtilsProtocol {
+  Stream<Map<String, dynamic>> get stream;
+  Future<bool> init([Map<String, dynamic> initialData]);
+  dynamic getItem(String key);
+  Future<void> setItem(String key, value);
+  Future<void> remove(String key);
+  Future<void> flush();
+  Future<void> clear();
+  void dispose();
+}
+
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
   Stream<Map<String, dynamic>> get stream => _dir.stream;
@@ -12,7 +25,7 @@ class LocalStorage {
   static final Map<String, LocalStorage> _cache = new Map();
   final VoidCallback onInitError;
 
-  DirUtils _dir;
+  DirUtilsProtocol _dir;
 
   /// [ValueNotifier] which notifies about errors during storage initialization
   ValueNotifier<Error> onError;
@@ -26,7 +39,8 @@ class LocalStorage {
   /// [key] is used as a filename
   /// Optional [path] is used as a directory. Defaults to application document directory
   factory LocalStorage(String key,
-      {String path,
+      {DirUtilsProtocol dirUtils,
+      String path,
       Map<String, dynamic> initialData,
       VoidCallback onInitError,
       bool debugMode}) {
@@ -34,7 +48,7 @@ class LocalStorage {
       return _cache[key];
     } else {
       final instance = LocalStorage._internal(
-          key, path, initialData, onInitError, debugMode);
+          key, dirUtils, path, initialData, onInitError, debugMode);
       _cache[key] = instance;
 
       return instance;
@@ -46,11 +60,12 @@ class LocalStorage {
   }
 
   LocalStorage._internal(String key,
+      DirUtilsProtocol dirUtils,
       [String path,
       Map<String, dynamic> initialData,
       this.onInitError,
       bool debugMode]) {
-    _dir = DirUtils(key, path, debugMode);
+    _dir = dirUtils ?? DirUtils(key, path, debugMode);
     _initialData = initialData;
     onError = new ValueNotifier(null);
 

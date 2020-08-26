@@ -4,10 +4,11 @@ import 'dart:io';
 
 import 'package:localstorage/src/errors.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../impl.dart';
 
-class DirUtils implements LocalStorageImpl {
+class DirUtils with DirUtilsProtocol implements LocalStorageImpl {
   DirUtils(this.fileName, [this.path, this.debugMode]);
 
   final String path, fileName;

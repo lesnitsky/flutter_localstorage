@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:localstorage/src/errors.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../impl.dart';
 
-class DirUtils implements LocalStorageImpl {
+class DirUtils with DirUtilsProtocol implements LocalStorageImpl {
   DirUtils(this.fileName, [this.path, this.debugMode]);
 
   final String path, fileName;
