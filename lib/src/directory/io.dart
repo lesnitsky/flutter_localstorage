@@ -91,8 +91,7 @@ class DirUtils implements LocalStorageImpl {
   }
 
   Future<File> _getFile() async {
-    final dir = await _getDocumentDir();
-    final _path = path ?? dir.path;
+    final _path = path ?? (await _getDocumentDir()).path;
     final _file = File('$_path/$fileName');
     return _file;
   }
