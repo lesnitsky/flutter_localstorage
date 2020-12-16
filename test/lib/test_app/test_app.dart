@@ -28,7 +28,7 @@ class _TestAppState extends State<TestApp> {
     return Scaffold(appBar: appBar, body: body, bottomNavigationBar: bottomBar);
   }
 
-  Widget get appBar {
+  PreferredSizeWidget get appBar {
     return AppBar(title: Text('Integration Test'));
   }
 

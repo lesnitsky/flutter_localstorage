@@ -20,31 +20,32 @@ class DirUtils implements LocalStorageImpl {
   StreamController<Map<String, dynamic>> storage =
       StreamController<Map<String, dynamic>>();
 
+  RandomAccessFile _file;
+
   @override
   Future<void> clear() async {
-    File _file = await _getFile();
     _data.clear();
     storage.add(null);
-    return _file.deleteSync();
   }
 
   @override
   void dispose() {
     storage.close();
+    _file.close();
   }
 
   @override
   Future<bool> exists() async {
-    File _file = await _getFile();
-    return _file.existsSync();
+    return true;
   }
 
   @override
-  Future<void> flush() async {
-    final serialized = json.encode(_data);
-    File _file = await _getFile();
-    await _file.writeAsString(serialized, flush: true);
-    return;
+  Future<void> flush([dynamic data]) async {
+    final serialized = json.encode(data ?? _data);
+    _file = await _file.lock();
+    _file = await _file.setPosition(0);
+    _file = await _file.writeString(serialized);
+    _file = await _file.truncate(serialized.length);
   }
 
   @override
@@ -55,45 +56,52 @@ class DirUtils implements LocalStorageImpl {
   @override
   Future<void> init([Map<String, dynamic> initialData]) async {
     _data = initialData ?? {};
-    File _file = await _getFile();
-    if (_file.existsSync()) {
-      return _readFile();
+
+    final f = await _getFile();
+    final length = await f.length();
+
+    if (length == 0) {
+      return flush({});
     } else {
-      return _writeFile(_data);
+      await _readFile();
     }
   }
 
   @override
   Future<void> remove(String key) async {
     _data.remove(key);
-    await _writeFile(_data);
   }
 
   @override
   Future<void> setItem(String key, dynamic value) async {
     _data[key] = value;
-    await _writeFile(_data);
-  }
-
-  Future<void> _writeFile(Map<String, dynamic> data) async {
-    _data = data;
-    storage.add(data);
-    File _file = await _getFile();
-    _file.writeAsString(json.encode(data), flush: true);
   }
 
   Future<void> _readFile() async {
-    File _file = await _getFile();
+    RandomAccessFile _file = await _getFile();
+    final length = await _file.length();
+    final buffer = await _file.read(length);
+    final contentText = utf8.decode(buffer);
 
-    final content = await _file.readAsString();
-    _data = json.decode(content) as Map<String, dynamic>;
+    _data = json.decode(contentText) as Map<String, dynamic>;
     storage.add(_data);
   }
 
-  Future<File> _getFile() async {
+  Future<RandomAccessFile> _getFile() async {
+    if (_file != null) {
+      return _file;
+    }
+
     final _path = path ?? (await _getDocumentDir()).path;
-    final _file = File('$_path/$fileName');
-    return _file;
+    final file = File('$_path/$fileName');
+
+    if (await file.exists()) {
+      _file = await file.open(mode: FileMode.append);
+      return _file;
+    } else {
+      await file.create();
+      return await file.open(mode: FileMode.append);
+    }
   }
 
   Future<Directory> _getDocumentDir() async {
