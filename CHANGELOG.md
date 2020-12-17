@@ -1,3 +1,7 @@
+## 3.0.4+7
+
+- fix [#43 Error on init - Unexpected end of input (at character 1) ^](https://github.com/lesnitsky/flutter_localstorage/issues/43)
+
 ## 3.0.2+5
 
 - fix `clear()` (drops data only from a storage instance, not all storages)
