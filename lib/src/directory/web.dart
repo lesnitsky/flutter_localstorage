@@ -53,15 +53,13 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future<void> remove(String key) {
+  Future<void> remove(String key) async {
     _data.remove(key);
-    return _writeToStorage(_data);
   }
 
   @override
-  Future<void> setItem(String key, value) {
+  Future<void> setItem(String key, value) async {
     _data[key] = value;
-    return _writeToStorage(_data);
   }
 
   @override

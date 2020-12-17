@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:localstorage/src/errors.dart';
 import 'package:path_provider/path_provider.dart';
@@ -80,7 +81,9 @@ class DirUtils implements LocalStorageImpl {
   Future<void> _readFile() async {
     RandomAccessFile _file = await _getFile();
     final length = await _file.length();
-    final buffer = await _file.read(length);
+    _file = await _file.setPosition(0);
+    final buffer = new Uint8List(length);
+    await _file.readInto(buffer);
     final contentText = utf8.decode(buffer);
 
     _data = json.decode(contentText) as Map<String, dynamic>;

@@ -72,9 +72,16 @@ class LocalStorage {
     value, [
     Object toEncodable(Object nonEncodable),
   ]) async {
-    final _encoded =
-        json.encode(toEncodable != null ? toEncodable(value) : value);
-    await _dir.setItem(key, json.decode(_encoded));
+    var data = toEncodable != null ? toEncodable(value) : null;
+    if (data == null) {
+      try {
+        data = value.toJson();
+      } on NoSuchMethodError catch (_) {
+        data = value;
+      }
+    }
+
+    await _dir.setItem(key, data);
 
     return _flush();
   }
