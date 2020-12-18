@@ -100,11 +100,12 @@ class DirUtils implements LocalStorageImpl {
 
     if (await file.exists()) {
       _file = await file.open(mode: FileMode.append);
-      return _file;
     } else {
       await file.create();
-      return await file.open(mode: FileMode.append);
+      _file = await file.open(mode: FileMode.append);
     }
+
+    return _file;
   }
 
   Future<Directory> _getDocumentDir() async {
