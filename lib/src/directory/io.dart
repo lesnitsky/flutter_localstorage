@@ -5,7 +5,6 @@ import 'dart:typed_data';
 
 import 'package:localstorage/src/errors.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:characters/characters.dart';
 
 import '../impl.dart';
 

@@ -1,4 +1,8 @@
-## 2.0.5+8
+## 3.0.6+9
+
+- fix wrong truncate size (use utf8.encode)
+
+## 3.0.5+8
 
 - fix an issue with initial storage creation
 
