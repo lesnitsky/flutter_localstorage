@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:localstorage/src/errors.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:characters/characters.dart';
 
 import '../impl.dart';
 
@@ -43,10 +44,12 @@ class DirUtils implements LocalStorageImpl {
   @override
   Future<void> flush([dynamic data]) async {
     final serialized = json.encode(data ?? _data);
+    final buffer = utf8.encode(serialized);
+
     _file = await _file.lock();
     _file = await _file.setPosition(0);
-    _file = await _file.writeString(serialized);
-    _file = await _file.truncate(serialized.length);
+    _file = await _file.writeFrom(buffer);
+    _file = await _file.truncate(buffer.length);
   }
 
   @override
