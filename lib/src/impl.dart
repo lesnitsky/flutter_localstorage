@@ -3,7 +3,8 @@ import 'dart:async';
 abstract class LocalStorageImpl {
   LocalStorageImpl(this.fileName, [this.path]);
 
-  final String path, fileName;
+  final String fileName;
+  final String? path;
 
   Stream<Map<String, dynamic>> get stream;
 

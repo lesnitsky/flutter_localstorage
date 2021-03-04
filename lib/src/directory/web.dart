@@ -5,19 +5,19 @@ import 'dart:html' as html;
 import '../impl.dart';
 
 class DirUtils implements LocalStorageImpl {
-  final String path, fileName;
+  final String fileName;
+  final String? path;
 
   DirUtils(this.fileName, [this.path]);
   html.Storage get localStorage => html.window.localStorage;
   Map<String, dynamic> _data = Map();
 
-  StreamController<Map<String, dynamic>> storage =
-      StreamController<Map<String, dynamic>>();
+  StreamController<Map<String, dynamic>> storage = StreamController<Map<String, dynamic>>();
 
   @override
   Future<void> clear() async {
     localStorage.remove(fileName);
-    storage.add(null);
+    // storage.add(null);
     _data.clear();
   }
 
@@ -28,7 +28,7 @@ class DirUtils implements LocalStorageImpl {
 
   @override
   Future<bool> exists() async {
-    return localStorage != null && localStorage.containsKey(fileName);
+    return localStorage.containsKey(fileName);
   }
 
   @override
@@ -42,8 +42,8 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future<void> init([Map<String, dynamic> initialData]) async {
-    _data = initialData ?? {};
+  Future<void> init([Map<String, dynamic> initialData = const {}]) async {
+    _data = initialData;
     if (await exists()) {
       await _readFromStorage();
     } else {
@@ -76,10 +76,13 @@ class DirUtils implements LocalStorageImpl {
   }
 
   Future<void> _readFromStorage() async {
-    final data = localStorage.entries.firstWhere(
-      (i) => i.key == fileName,
-      orElse: () => null,
-    );
+    // .firstWhere() is really a pain in dart 2.0
+    MapEntry<String, String>? data;
+    try {
+      data = localStorage.entries.firstWhere((i) => i.key == fileName);
+    } on StateError {
+      data = null;
+    }
     if (data != null) {
       _data = json.decode(data.value) as Map<String, dynamic>;
       storage.add(_data);
