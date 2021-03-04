@@ -18,8 +18,7 @@ class DirUtils implements LocalStorageImpl {
   @override
   Stream<Map<String, dynamic>> get stream => storage.stream;
 
-  StreamController<Map<String, dynamic>> storage =
-      StreamController<Map<String, dynamic>>();
+  StreamController<Map<String, dynamic>> storage = StreamController<Map<String, dynamic>>();
 
   RandomAccessFile _file;
 
@@ -49,6 +48,7 @@ class DirUtils implements LocalStorageImpl {
     _file = await _file.setPosition(0);
     _file = await _file.writeFrom(buffer);
     _file = await _file.truncate(buffer.length);
+    await _file.unlock();
   }
 
   @override
