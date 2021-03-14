@@ -7,10 +7,10 @@ import '../impl.dart';
 class DirUtils implements LocalStorageImpl {
   DirUtils(this.fileName, [this.path]);
 
-  final String path, fileName;
+  final String fileName;
+  final String? path;
 
-  StreamController<Map<String, dynamic>> storage =
-      StreamController<Map<String, dynamic>>();
+  StreamController<Map<String, dynamic>> storage = StreamController<Map<String, dynamic>>();
 
   @override
   Future<void> clear() {
@@ -38,7 +38,7 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
-  Future<void> init([Map<String, dynamic> initialData]) {
+  Future<void> init([Map<String, dynamic>? initialData]) {
     throw PlatformNotSupportedError();
   }
 

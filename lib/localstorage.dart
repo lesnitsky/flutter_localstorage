@@ -7,24 +7,23 @@ import 'src/directory/directory.dart';
 /// Creates instance of a local storage. Key is used as a filename
 class LocalStorage {
   Stream<Map<String, dynamic>> get stream => _dir.stream;
-  Map<String, dynamic> _initialData;
+  Map<String, dynamic>? _initialData;
 
   static final Map<String, LocalStorage> _cache = new Map();
 
-  DirUtils _dir;
+  late DirUtils _dir;
 
   /// [ValueNotifier] which notifies about errors during storage initialization
-  ValueNotifier<Error> onError;
+  ValueNotifier<Error> onError = ValueNotifier(Error());
 
   /// A future indicating if localstorage instance is ready for read/write operations
-  Future<bool> ready;
+  late Future<bool> ready;
 
   /// [key] is used as a filename
   /// Optional [path] is used as a directory. Defaults to application document directory
-  factory LocalStorage(String key,
-      [String path, Map<String, dynamic> initialData]) {
+  factory LocalStorage(String key, [String? path, Map<String, dynamic>? initialData]) {
     if (_cache.containsKey(key)) {
-      return _cache[key];
+      return _cache[key]!;
     } else {
       final instance = LocalStorage._internal(key, path, initialData);
       _cache[key] = instance;
@@ -34,14 +33,12 @@ class LocalStorage {
   }
 
   void dispose() {
-    _dir?.dispose();
+    _dir.dispose();
   }
 
-  LocalStorage._internal(String key,
-      [String path, Map<String, dynamic> initialData]) {
+  LocalStorage._internal(String key, [String? path, Map<String, dynamic>? initialData]) {
     _dir = DirUtils(key, path);
     _initialData = initialData;
-    onError = new ValueNotifier(null);
 
     ready = new Future<bool>(() async {
       await this._init();
@@ -51,7 +48,7 @@ class LocalStorage {
 
   Future<void> _init() async {
     try {
-      await _dir.init(_initialData);
+      await _dir.init(_initialData ?? {});
     } on Error catch (err) {
       onError.value = err;
     }
@@ -69,9 +66,9 @@ class LocalStorage {
   Future<void> setItem(
     String key,
     value, [
-    Object toEncodable(Object nonEncodable),
+    Object toEncodable(Object nonEncodable)?,
   ]) async {
-    var data = toEncodable != null ? toEncodable(value) : null;
+    var data = toEncodable?.call(value) ?? null;
     if (data == null) {
       try {
         data = value.toJson();
