@@ -12,7 +12,8 @@ class DirUtils implements LocalStorageImpl {
   html.Storage get localStorage => html.window.localStorage;
   Map<String, dynamic> _data = Map();
 
-  StreamController<Map<String, dynamic>> storage = StreamController<Map<String, dynamic>>();
+  StreamController<Map<String, dynamic>> storage =
+      StreamController<Map<String, dynamic>>();
 
   @override
   Future<void> clear() async {
@@ -41,6 +42,10 @@ class DirUtils implements LocalStorageImpl {
     return _data[key];
   }
 
+  Map<String, dynamic> getData() {
+    return _data;
+  }
+
   @override
   Future<void> init([Map<String, dynamic> initialData = const {}]) async {
     _data = initialData;
@@ -60,6 +65,10 @@ class DirUtils implements LocalStorageImpl {
   @override
   Future<void> setItem(String key, value) async {
     _data[key] = value;
+  }
+
+  Future<void> setData(dynamic jsonData) async {
+    _data = jsonData;
   }
 
   @override

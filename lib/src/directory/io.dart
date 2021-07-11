@@ -19,7 +19,8 @@ class DirUtils implements LocalStorageImpl {
   @override
   Stream<Map<String, dynamic>> get stream => storage.stream;
 
-  StreamController<Map<String, dynamic>> storage = StreamController<Map<String, dynamic>>();
+  StreamController<Map<String, dynamic>> storage =
+      StreamController<Map<String, dynamic>>();
 
   RandomAccessFile? _file;
 
@@ -57,7 +58,10 @@ class DirUtils implements LocalStorageImpl {
     return _data[key];
   }
 
-  @override
+  Map<String, dynamic> getData() {
+    return _data;
+  }
+
   Future<void> init([Map<String, dynamic> initialData = const {}]) async {
     _data = initialData;
 
@@ -71,14 +75,16 @@ class DirUtils implements LocalStorageImpl {
     }
   }
 
-  @override
   Future<void> remove(String key) async {
     _data.remove(key);
   }
 
-  @override
   Future<void> setItem(String key, dynamic value) async {
     _data[key] = value;
+  }
+
+  Future<void> setData(dynamic jsonData) async {
+    _data = jsonData;
   }
 
   Future<void> _readFile() async {

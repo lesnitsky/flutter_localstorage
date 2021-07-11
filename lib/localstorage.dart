@@ -21,7 +21,8 @@ class LocalStorage {
 
   /// [key] is used as a filename
   /// Optional [path] is used as a directory. Defaults to application document directory
-  factory LocalStorage(String key, [String? path, Map<String, dynamic>? initialData]) {
+  factory LocalStorage(String key,
+      [String? path, Map<String, dynamic>? initialData]) {
     if (_cache.containsKey(key)) {
       return _cache[key]!;
     } else {
@@ -36,7 +37,8 @@ class LocalStorage {
     _dir.dispose();
   }
 
-  LocalStorage._internal(String key, [String? path, Map<String, dynamic>? initialData]) {
+  LocalStorage._internal(String key,
+      [String? path, Map<String, dynamic>? initialData]) {
     _dir = DirUtils(key, path);
     _initialData = initialData;
 
@@ -59,6 +61,10 @@ class LocalStorage {
     return _dir.getItem(key);
   }
 
+  Map<String, dynamic> getData() {
+    return _dir.getData();
+  }
+
   /// Saves item by [key] to a storage. Value should be json encodable (`json.encode()` is called under the hood).
   /// After item was set to storage, consecutive [getItem] will return `json` representation of this item
   /// if [toEncodable] is provided, it is called before setting item to storage
@@ -79,6 +85,11 @@ class LocalStorage {
 
     await _dir.setItem(key, data);
 
+    return _flush();
+  }
+
+  Future<void> setData(dynamic jsonData) async {
+    await _dir.setData(jsonData);
     return _flush();
   }
 

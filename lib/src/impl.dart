@@ -16,6 +16,8 @@ abstract class LocalStorageImpl {
 
   dynamic getItem(String key);
 
+  Map<String, dynamic> getData();
+  dynamic setData(dynamic jsonData);
   Future<bool> exists();
 
   Future<void> clear();
