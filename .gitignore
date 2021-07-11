@@ -8,6 +8,7 @@ build/
 ios/.generated/
 ios/Flutter/Generated.xcconfig
 ios/Runner/GeneratedPluginRegistrant.*
-
+test/.flutter-plugins-dependencies 
+test/ios/Flutter/flutter_export_environment.sh
 # ref: https://dart.dev/guides/libraries/private-files
 pubspec.lock 
