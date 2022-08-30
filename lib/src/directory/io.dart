@@ -104,7 +104,7 @@ class DirUtils implements LocalStorageImpl {
     if (await file.exists()) {
       _file = await file.open(mode: FileMode.append);
     } else {
-      await file.create();
+      await file.create(recursive: true);
       _file = await file.open(mode: FileMode.append);
     }
 
