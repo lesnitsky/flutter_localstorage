@@ -33,6 +33,9 @@ class LocalStorage {
   }
 
   void dispose() {
+    if (_cache.containsKey(_dir.fileName)) {
+      _cache.remove(_dir.fileName);
+    }
     _dir.dispose();
   }
 
