@@ -5,16 +5,14 @@ import 'package:test/test.dart';
 
 void main() {
   group('Integration Test App', () {
-    FlutterDriver driver;
+    late FlutterDriver driver;
 
     setUpAll(() async {
-      driver ??= await FlutterDriver.connect();
+      driver = await FlutterDriver.connect();
     });
 
     tearDownAll(() async {
-      if (driver != null) {
-        await driver.close();
-      }
+      await driver.close();
     });
 
     test('run assert test', () async {
