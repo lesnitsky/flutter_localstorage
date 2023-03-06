@@ -1,3 +1,7 @@
+# 4.0.1+2
+
+- dispose open files on reload
+
 ## 3.0.6+9
 
 - fix wrong truncate size (use utf8.encode)
