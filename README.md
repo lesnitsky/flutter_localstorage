@@ -2,8 +2,8 @@
 
 Simple json file-based storage for flutter
 
-[<img src="https://img.shields.io/twitter/follow/lesnitsky_dev.svg?label=Follow%20me&style=social" height="30px" />](https://twitter.com/lesnitsky_dev)
-[<img src="https://badges-897b.globeapp.dev/github?owner=lesnitsky&repository=flutter_localstorage" height="30px" />](https://github.com/lesnitsky/flutter_localstorage)
+[<img src="https://badges.globeapp.dev/twitter" height="40px" />](https://twitter.com/lesnitsky_dev)
+[<img src="https://badges.globeapp.dev/github?owner=lesnitsky&repository=flutter_localstorage" height="40px" />](https://github.com/lesnitsky/flutter_localstorage)
 
 ## Installation
 
@@ -72,6 +72,5 @@ flutter drive --target=lib/main.dart
 
 MIT
 
-[![lesnitsky.dev](https://lesnitsky.dev/icons/shield.svg?hash=42)](https://lesnitsky.dev?utm_source=flutter_localstroage)
-[![GitHub stars](https://img.shields.io/github/stars/lesnitsky/flutter_localstorage.svg?style=social)](https://github.com/lesnitsky/flutter_localstorage)
-[![Twitter Follow](https://img.shields.io/twitter/follow/lesnitsky_dev.svg?label=Follow%20me&style=social)](https://twitter.com/lesnitsky_dev)
+[<img src="https://badges.globeapp.dev/twitter" height="40px" />](https://twitter.com/lesnitsky_dev)
+[<img src="https://badges.globeapp.dev/github?owner=lesnitsky&repository=flutter_localstorage" height="40px" />](https://github.com/lesnitsky/flutter_localstorage)
