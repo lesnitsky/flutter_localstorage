@@ -76,11 +76,13 @@ class DirUtils implements LocalStorageImpl {
   @override
   Future<void> remove(String key) async {
     _data.remove(key);
+    storage.add({ "itemWasRemoved": true });
   }
 
   @override
   Future<void> setItem(String key, dynamic value) async {
     _data[key] = value;
+    storage.add({ "itemWasSet": true });
   }
 
   Future<void> _readFile() async {

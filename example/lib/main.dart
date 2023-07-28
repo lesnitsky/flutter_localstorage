@@ -63,7 +63,11 @@ class _MyHomePageState extends State<HomePage> {
     super.initState();
     storage = LocalStorage('todo_app.json');
     storage.stream.listen((event) {
-      if (event['size'] != null) {
+      if (event.containsKey("itemWasSet")) {
+        debugPrint("an item was set");
+      } else if (event.containsKey("itemWasRemoved")) {
+        debugPrint("an item was removed");
+      } else if (event['size'] != null) {
         int rawSize = event['size'];
         debugPrint("Size of file : $rawSize");
       }
