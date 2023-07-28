@@ -9,7 +9,7 @@ class LocalStorage {
   Stream<Map<String, dynamic>> get stream => _dir.stream;
   Map<String, dynamic>? _initialData;
 
-  static final Map<String, LocalStorage> _cache = new Map();
+  static final Map<String, LocalStorage> _cache = {};
 
   late DirUtils _dir;
 
@@ -68,9 +68,10 @@ class LocalStorage {
   /// otherwise `value.toJson()` is called
   Future<void> setItem(
     String key,
-    value, [
-    Object toEncodable(Object nonEncodable)?,
-  ]) async {
+    value, {
+    Object Function(Object nonEncodable)? toEncodable,
+    bool write = true
+  }) async {
     var data = toEncodable?.call(value) ?? null;
     if (data == null) {
       try {
@@ -82,12 +83,25 @@ class LocalStorage {
 
     await _dir.setItem(key, data);
 
+    if (write) _flush(); 
+  }
+
+  /// Saves the data permanently in the JSON file.
+  Future<void> writeData() async {
     return _flush();
   }
 
   /// Removes item from storage by key
   Future<void> deleteItem(String key) async {
     await _dir.remove(key);
+    return _flush();
+  }
+
+  /// Delete multiple entries before saving those changes into the file.
+  Future<void> deleteItems(List<String> keys) async {
+    for (final key in keys) {
+      await _dir.remove(key);
+    }
     return _flush();
   }
 

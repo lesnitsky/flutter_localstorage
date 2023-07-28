@@ -54,9 +54,21 @@ class TodoList {
 
 class _MyHomePageState extends State<HomePage> {
   final TodoList list = new TodoList();
-  final LocalStorage storage = new LocalStorage('todo_app.json');
+  late LocalStorage storage;
   bool initialized = false;
   TextEditingController controller = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    storage = LocalStorage('todo_app.json');
+    storage.stream.listen((event) {
+      if (event['size'] != null) {
+        int rawSize = event['size'];
+        debugPrint("Size of file : $rawSize");
+      }
+    });
+  }
 
   _toggleItem(TodoItem item) {
     setState(() {
