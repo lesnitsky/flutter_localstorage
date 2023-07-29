@@ -57,6 +57,12 @@ class LocalStorage {
     }
   }
 
+  /// Returns the number of bytes currently stored in the JSON file.
+  /// This function will throw a `PlatformNotSupportedError` if used on the web.
+  Future<int> getStorageSize() async {
+    return await _dir.getFileSize();
+  }
+
   /// Returns a value from storage by key
   dynamic getItem(String key) {
     return _dir.getItem(key);

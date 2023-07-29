@@ -33,6 +33,11 @@ class DirUtils implements LocalStorageImpl {
   }
 
   @override
+  Future<int> getFileSize() {
+    throw PlatformNotSupportedError();
+  }
+
+  @override
   dynamic getItem(String key) {
     throw PlatformNotSupportedError();
   }

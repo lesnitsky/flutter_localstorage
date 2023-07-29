@@ -12,6 +12,8 @@ abstract class LocalStorageImpl {
 
   Future<void> init([Map<String, dynamic> initialData]);
 
+  Future<int> getFileSize();
+
   Future<void> setItem(String key, dynamic value);
 
   dynamic getItem(String key);
