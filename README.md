@@ -45,6 +45,33 @@ class SomeWidget extends StatelessWidget {
 }
 ```
 
+## Control over performance
+
+The way it works is that `LocalStorage` stores all the data in a single variable of type `Map<String, dynamic>`, and everytime you update this map, a JSON file, whose name is the key you give when creating an instance of `LocalStorage`, is re-written from zero.
+
+Therefore, when storing a big amount of data progressively, you do not want to call `setItem()` or `deleteItem()` multiple times, because the action of re-writing an entire file may take some time.
+
+There is now the possibility to control when the file should be re-written : 
+
+```dart
+// The key "some_data" will be accessible to you when using `getItem()`.
+// However, it will not be saved on the JSON file,
+// making this action faster.
+await storage.setItem("some_data", "E=mc2", write: false);
+```
+
+Obvisouly, you need to save that data on the JSON file at some point. Well, at the end of your big computations, you can just call this method:
+
+```dart
+storage.writeData();
+```
+
+And now all the changes you made to `storage` will be saved locally.
+
+To delete data, it's different. If you call `deleteItem(String key)` then the JSON file will be re-written automatically. To delete multiple items, you must use `deleteItems(List<String> keys)`, which is much more efficient than looping over the keys and calling `deleteItem()` multiple times.
+
+> **NOTE**: to avoid the error: "an asynchronous task is already pending" it would be better to always await a call to `deleteItem()`, `deleteItems()` and `setItem()` when `write` is set to `true`.
+
 ## V2 -> v3 migration
 
 V3 doesn't add `.json` extension to a storage filename, so you need to do this on your own if you need a "migration".
