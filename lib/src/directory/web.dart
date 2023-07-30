@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:html' as html;
 
+import 'package:localstorage/src/errors.dart';
+
 import '../impl.dart';
 
 class DirUtils implements LocalStorageImpl {
@@ -39,6 +41,11 @@ class DirUtils implements LocalStorageImpl {
   @override
   dynamic getItem(String key) {
     return _data[key];
+  }
+
+  @override
+  Future<int> getFileSize() async {
+    throw PlatformNotSupportedError();
   }
 
   @override
