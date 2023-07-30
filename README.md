@@ -1,25 +1,9 @@
 # Localstorage
 
-Simple json file-based storage for flutter
+Simple json file-based storage for Flutter that works on all platforms.
 
 [<img src="https://badges.globeapp.dev/twitter" height="40px" />](https://twitter.com/lesnitsky_dev)
 [<img src="https://badges.globeapp.dev/github?owner=lesnitsky&repository=flutter_localstorage" height="40px" />](https://github.com/lesnitsky/flutter_localstorage)
-
-## Installation
-
-Add dependency to `pubspec.yaml`
-
-```yaml
-dependencies:
-  ...
-  localstorage: ^4.0.0+1
-```
-
-Run in your terminal
-
-```sh
-flutter packages get
-```
 
 ## Example
 
@@ -45,6 +29,50 @@ class SomeWidget extends StatelessWidget {
 }
 ```
 
+## Basic features
+
+- Add an item:
+
+```dart
+await storage.setItem("key", "dynamic value");
+```
+
+- Delete an item:
+
+```dart
+await storage.deleteItem("key");
+```
+
+- Get an item:
+
+```dart
+dynamic value = storage.getItem("key");
+```
+
+## Stream and helper features
+
+- Get the size of the JSON file
+
+```dart
+int bytes = await storage.getStorageSize();
+```
+
+- Receive notifications
+
+```dart
+storage.stream.listen((e) {
+  if (e.containsKey("itemWasSet")) {
+    print("an item was set");
+  } else if (e.containsKey("itemWasRemoved")) {
+    print("an item was removed".);
+  } else if (e.containsKey("size")) {
+    print("The JSON file was re-written");
+    int bytes = e['size'];
+    print("And it contains $bytes bytes");
+  }
+});
+```
+
 ## Control over performance
 
 The way it works is that `LocalStorage` stores all the data in a single variable of type `Map<String, dynamic>`, and everytime you update this map, a JSON file, whose name is the key you give when creating an instance of `LocalStorage`, is re-written from zero.
@@ -56,14 +84,15 @@ There is now the possibility to control when the file should be re-written :
 ```dart
 // The key "some_data" will be accessible to you when using `getItem()`.
 // However, it will not be saved on the JSON file,
+// (not stored locally)
 // making this action faster.
 await storage.setItem("some_data", "E=mc2", write: false);
 ```
 
-Obvisouly, you need to save that data on the JSON file at some point. Well, at the end of your big computations, you can just call this method:
+Obviously, you need to save that data on the JSON file at some point. Well, at the end of your big computations, you can just call this method:
 
 ```dart
-storage.writeData();
+await storage.writeData();
 ```
 
 And now all the changes you made to `storage` will be saved locally.
