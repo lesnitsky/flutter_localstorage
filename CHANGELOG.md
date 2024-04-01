@@ -1,3 +1,7 @@
+# 5.0.0
+
+- Migrate to synchronous API and make API consistent with web `window.localStorage`
+
 # 4.0.1+2
 
 - dispose open files on reload
