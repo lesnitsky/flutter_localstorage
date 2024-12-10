@@ -1,5 +1,5 @@
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' show window;
+import 'package:web/web.dart' show window;
 import './interface.dart';
 
 Future<LocalStorage> init() async {
@@ -14,16 +14,16 @@ final class LocalStorageImpl implements LocalStorage {
   void clear() => window.localStorage.clear();
 
   @override
-  String? getItem(String key) => window.localStorage[key];
+  String? getItem(String key) => window.localStorage.getItem(key);
 
   @override
-  String? key(int index) => window.localStorage.keys.elementAt(index);
+  String? key(int index) => window.localStorage.key(index);
 
   @override
-  void removeItem(String key) => window.localStorage.remove(key);
+  void removeItem(String key) => window.localStorage.removeItem(key);
 
   @override
   void setItem(String key, String value) {
-    window.localStorage[key] = value;
+    window.localStorage.setItem(key, value);
   }
 }
