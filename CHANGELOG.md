@@ -1,3 +1,7 @@
+# 6.0.0
+
+- WASM support by [@jezel](https://x.com/jezell)
+
 # 5.0.0
 
 - Migrate to synchronous API and make API consistent with web `window.localStorage`

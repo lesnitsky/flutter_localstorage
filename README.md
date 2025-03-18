@@ -5,9 +5,6 @@
 > [!IMPORTANT]  
 > LocalStorage is not intended to store large amounts or sensitive data.
 
-[<img src="https://badges.globeapp.dev/twitter" height="40px" />](https://twitter.com/lesnitsky_dev)
-[<img src="https://badges.globeapp.dev/github?owner=lesnitsky&repository=flutter_localstorage" height="40px" />](https://github.com/lesnitsky/flutter_localstorage)
-
 ## Installation
 
 ```sh
@@ -72,9 +69,11 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+## Contributors
+
+- [lesnitsky_dev](https://x.com/lesnitsky_dev)
+- [Jesse Ezell](https://x.com/jezell)
+
 ## License
 
 MIT
-
-[<img src="https://badges.globeapp.dev/twitter" height="40px" />](https://twitter.com/lesnitsky_dev)
-[<img src="https://badges.globeapp.dev/github?owner=lesnitsky&repository=flutter_localstorage" height="40px" />](https://github.com/lesnitsky/flutter_localstorage)
