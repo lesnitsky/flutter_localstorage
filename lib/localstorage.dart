@@ -1,6 +1,6 @@
 import './src/interface.dart';
 import './src/localstorage_io.dart'
-    if (dart.library.html) './src/localstorage_web.dart';
+    if (dart.library.js_interop) './src/localstorage_web.dart';
 
 export './src/interface.dart';
 
