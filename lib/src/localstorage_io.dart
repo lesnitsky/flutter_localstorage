@@ -17,6 +17,7 @@ Future<LocalStorage> init() async {
 
   if (!storageFile.existsSync()) {
     storageFile.createSync();
+    storageFile.writeAsStringSync('{}');
   }
 
   try {
